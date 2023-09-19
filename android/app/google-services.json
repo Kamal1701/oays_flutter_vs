@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "144135656301",
+    "project_id": "oays-flutter-vs",
+    "storage_bucket": "oays-flutter-vs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144135656301:android:e3e8209ca22639a7280064",
+        "android_client_info": {
+          "package_name": "com.example.oaysflutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT8sdB1ucfP1nswrZ7QDry23FPHLbY6H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

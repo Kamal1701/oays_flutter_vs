@@ -10,5 +10,13 @@ const profile = 'Profile';
 const addOfferProduct = 'Add Offers';
 const updateOffer = 'Update Offer';
 
+//Image path
+const defaultImagePath = 'assets/images/image_placeholder.png';
+
 //Database table name
 const customerProfile = "CustomerProfile";
+const productDetail = 'ProductDetail';
+const offerProductDetail = 'OfferProductDetail';
+
+//image path
+const offerProductImagePath = 'OfferProductImages';

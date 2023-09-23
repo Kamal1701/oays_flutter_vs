@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
+import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/models/oays_user_model.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
 
@@ -60,24 +63,88 @@ class OAYSDatabaseService {
       //
     }
     return null;
-    // return CustomerRegistration.fromMap(
-    //     snapshot.data() as Map<String, dynamic>);
   }
 
-  // Future<DocumentSnapshot?> getCustomer() async {
-  //   try {
-  //     DocumentSnapshot snapshot =
-  //         await _db.collection("CustomerProfile").doc(userId).get();
-  //     if (snapshot.exists) {
-  //       // final Map<String, dynamic> data =
-  //       //     snapshot.data() as Map<String, dynamic>;
-  //       return snapshot;
-  //     }
-  //   } catch (e) {
-  //     //
-  //   }
-  //   return null;
-  //   // return CustomerRegistration.fromMap(
-  //   //     snapshot.data() as Map<String, dynamic>);
-  // }
+  Future<String> getOfferProductId(String userId) async {
+    try {
+      // String userId = Get.find<OAYSAuthenticationController>().user!.uid;
+      final docRef = _db.collection(productDetail).doc(userId);
+      await docRef.set(Map.of({'_id': userId}));
+
+      final subDocRef = docRef.collection(offerProductDetail).doc();
+      subDocRef.set({});
+      final subDocRefId = subDocRef.id;
+      return subDocRefId;
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Unable to add product now. Please try again later.';
+    }
+  }
+
+  Future<String> addOfferProduct(
+      OAYSOfferProduct op, String userId, String offerId) async {
+    try {
+      // String productSubCollectionId;
+      // String userId = Get.find<OAYSAuthenticationController>().user!.uid;
+      await _db
+          .collection(productDetail)
+          .doc(userId)
+          .collection(offerProductDetail)
+          .doc(offerId)
+          .set(op.toMap())
+          .whenComplete(() {
+        _db
+            .collection(productDetail)
+            .doc(userId)
+            .collection(offerProductDetail)
+            .doc(offerId)
+            .update(timeTracker);
+      });
+
+      // await _db
+      //     .collection(productDetail)
+      //     .doc(userId)
+      //     .set(Map.of({'_id': userId}))
+      //     .whenComplete(() async {
+      //   productSubCollectionId = _db
+      //       .collection(productDetail)
+      //       .doc(userId)
+      //       .collection(offerProductDetail)
+      //       .doc()
+      //       .id;
+      //   _db
+      //       .collection(productDetail)
+      //       .doc(userId)
+      //       .collection(offerProductDetail)
+      //       .doc(productSubCollectionId)
+      //       .set(op.toMap())
+      //       .whenComplete(() {
+      //     timeTracker['offerProductId'] = productSubCollectionId;
+      //     _db
+      //         .collection(productDetail)
+      //         .doc(userId)
+      //         .collection(offerProductDetail)
+      //         .doc(productSubCollectionId)
+      //         .update(timeTracker);
+      //     // _db
+      //     //     .collection(productDetail)
+      //     //     .doc(userId)
+      //     //     .collection(offerProductDetail)
+      //     //     .doc(productSubCollectionId)
+      //     //     .update(
+      //     //       Map.of(
+      //     //         {'offerProductId': productSubCollectionId},
+      //     //       ),
+      //     //     );
+      //     // Get.offAll(() => const OAYSSignInScreen());
+      //   });
+      // });
+      return 'Success';
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Unable to add product now. Please try again later.';
+    }
+  }
 }

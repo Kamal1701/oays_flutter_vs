@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/controllers/oays_drawer_controller.dart';
-import 'package:oaysflutter/controllers/oays_user_model.controller.dart';
-import 'package:oaysflutter/services/oays_database_service.dart';
+import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
 
@@ -23,13 +21,7 @@ class OAYSHomeScreen extends StatelessWidget {
         ),
         backgroundColor: backgroundDarkColor,
       ),
-      body: Center(
-        child: Obx(
-          () => Text(
-            drawerController.pageTitle.value,
-          ),
-        ),
-      ),
+      body: drawerController.container,
       drawer: Drawer(
         elevation: 0,
         backgroundColor: boxFillColor,
@@ -37,12 +29,6 @@ class OAYSHomeScreen extends StatelessWidget {
         child: ListView(
           children: [
             GetBuilder<OAYSUserController>(
-              // initState: (_) async {
-              //   print(Get.find<OAYSAuthenticationController>().user!.uid);
-              //   // Get.find<OAYSUserController>().oaysUser =
-              //   //     await OAYSDatabaseService().getCustomer(
-              //   //         Get.find<OAYSAuthenticationController>().user!.uid);
-              // },
               builder: (controller) {
                 return DrawerHeader(
                   decoration: BoxDecoration(

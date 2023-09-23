@@ -15,6 +15,7 @@ class OAYSUserController extends GetxController {
     super.onInit();
     oaysUser = await OAYSDatabaseService()
         .getCustomer(Get.find<OAYSAuthenticationController>().user!.uid);
+    // print(oaysUser);
   }
 
   void clear() {

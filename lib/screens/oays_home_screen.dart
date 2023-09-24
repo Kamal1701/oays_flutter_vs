@@ -12,53 +12,62 @@ class OAYSHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Obx(
-          () => Text(
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title:
+              // Obx(
+              //   () =>
+              Text(
             drawerController.pageTitle.value,
           ),
+          // ),
+          backgroundColor: backgroundDarkColor,
         ),
-        backgroundColor: backgroundDarkColor,
-      ),
-      body: drawerController.container,
-      drawer: Drawer(
-        elevation: 0,
-        backgroundColor: boxFillColor,
-        width: 250,
-        child: ListView(
-          children: [
-            GetBuilder<OAYSUserController>(
-              builder: (controller) {
-                return DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: backgroundDarkColor,
-                  ),
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            controller.oaysUser.userName,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            controller.oaysUser.userLocation,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            oAYSDrawerList(),
-          ],
+        body: drawerController.container,
+        //   Obx(
+        // () {
+        //   return drawerController.container.value;
+        // },
+        // ),
+        drawer: Drawer(
+          elevation: 0,
+          backgroundColor: boxFillColor,
+          width: 250,
+          child: ListView(
+            children: [
+              GetBuilder<OAYSUserController>(
+                builder: (controller) {
+                  return DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: backgroundDarkColor,
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              controller.oaysUser.userName,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              controller.oaysUser.userLocation,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              oAYSDrawerList(),
+            ],
+          ),
         ),
       ),
     );
@@ -82,14 +91,16 @@ class OAYSHomeScreen extends StatelessWidget {
             2,
             profile,
           ),
-          oAYSMenuOption(
-            3,
-            addOfferProduct,
-          ),
-          oAYSMenuOption(
-            4,
-            updateOffer,
-          ),
+          if (userController.oaysUser.isMerchant)
+            oAYSMenuOption(
+              3,
+              addOfferProduct,
+            ),
+          if (userController.oaysUser.isMerchant)
+            oAYSMenuOption(
+              4,
+              updateOffer,
+            ),
         ],
       ),
     );

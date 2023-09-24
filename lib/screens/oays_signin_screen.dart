@@ -81,24 +81,22 @@ class OAYSSignInScreen extends GetView<OAYSSignInScreenController> {
           ),
         ),
         Obx(
-          () => Visibility(
-            visible: signInController.isLoginSuccess.value,
-            child: const Opacity(
-              opacity: 0.5,
-              child: ModalBarrier(
-                dismissible: false,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ),
-        Obx(
-          () => Visibility(
-            visible: signInController.isLoginSuccess.value,
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
+          () => signInController.isLoginSuccess.value
+              ? const Stack(
+                  children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: ModalBarrier(
+                        color: Colors.black,
+                        dismissible: false,
+                      ),
+                    ),
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                )
+              : Container(),
         ),
       ],
     );

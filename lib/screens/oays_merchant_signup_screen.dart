@@ -103,22 +103,22 @@ class OAYSMerchantSignUpScreen extends StatelessWidget {
               )),
         ),
         Obx(
-          () => Visibility(
-            visible: signUpController.isRegisterSuccess.value,
-            child: const Opacity(
-              opacity: 0.5,
-              child: ModalBarrier(
-                dismissible: false,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ),
-        Obx(
-          () => Visibility(
-            visible: signUpController.isRegisterSuccess.value,
-            child: const CircularProgressIndicator(),
-          ),
+          () => signUpController.isRegisterSuccess.value
+              ? const Stack(
+                  children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: ModalBarrier(
+                        color: Colors.black,
+                        dismissible: false,
+                      ),
+                    ),
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                )
+              : Container(),
         ),
       ],
     );

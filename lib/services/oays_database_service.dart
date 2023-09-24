@@ -72,7 +72,7 @@ class OAYSDatabaseService {
       await docRef.set(Map.of({'_id': userId}));
 
       final subDocRef = docRef.collection(offerProductDetail).doc();
-      subDocRef.set({});
+      // subDocRef.set({});
       final subDocRefId = subDocRef.id;
       return subDocRefId;
     } on FirebaseException catch (e) {
@@ -146,5 +146,63 @@ class OAYSDatabaseService {
     } catch (e) {
       return 'Unable to add product now. Please try again later.';
     }
+  }
+
+  // Stream<List<OAYSOfferProduct>> getOfferProductStream(String uid) {
+  //   return _db
+  //       .collection(customerProfile)
+  //       .doc(uid)
+  //       .collection(offerProductDetail)
+  //       // .orderBy("createdDate", descending: true)
+  //       .snapshots()
+  //       .map((QuerySnapshot query) {
+  //     List<OAYSOfferProduct> retVal = [];
+  //     print(query.docs.length);
+  //     for (var element in query.docs) {
+  //       retVal.add(OAYSOfferProduct.fromDocumentSnapshot(
+  //           element as DocumentSnapshot<Map<String, dynamic>>));
+  //       print(retVal);
+  //     }
+  //     return retVal;
+  //   });
+  // }
+
+  // List<OAYSOfferProduct> getOfferProductStream2(String uid) {
+  //   final Stream<QuerySnapshot> offerProductStream = _db
+  //       .collection(productDetail)
+  //       .doc(uid)
+  //       .collection(offerProductDetail)
+  //       // .orderBy("createdDate", descending: true)
+  //       .snapshots();
+  //   List<OAYSOfferProduct> offerProduct = [];
+  //   print('object');
+  //   print(offerProductStream.length);
+  //   offerProductStream
+  //       .map((query) {
+  //         return query.docs.map((doc) {
+  //           return OAYSOfferProduct.fromSnapshot(doc);
+  //         }).toList();
+  //       })
+  //       .toList()
+  //       .then((value) => offerProduct);
+
+  //   return offerProduct;
+  // }
+
+  Future<List<OAYSOfferProduct>> getOfferProductStream(String userId) async {
+    List<OAYSOfferProduct> productList = [];
+    var querySnapshot = await _db
+        .collection(productDetail)
+        .doc(userId)
+        .collection(offerProductDetail)
+        // .orderBy("createdDate", descending: true)
+        .get();
+
+    for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+      productList.add(OAYSOfferProduct.fromDocumentSnapshot(
+          documentSnapshot as DocumentSnapshot<Map<String, dynamic>>));
+    }
+
+    return productList;
   }
 }

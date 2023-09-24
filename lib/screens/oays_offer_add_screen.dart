@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:oaysflutter/components/oays_textfield.dart';
 import 'package:oaysflutter/controllers/oays_offer_add_screen_controller.dart';
@@ -35,25 +34,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                 children: [
                   addVerticalSpace(20),
                   GestureDetector(
-                    // onTap: !addController.isGestureTapDisabled.value
-                    //     ? (() => Get.snackbar(
-                    //           'Info',
-                    //           'To add image, please uncheck no product image.',
-                    //           snackPosition: SnackPosition.BOTTOM,
-                    //           colorText: Colors.black,
-                    //           backgroundColor: boxFillColor,
-                    //         ))
-                    //     : () async {
-                    //         addController.productImagePath.value =
-                    //             await _selectImageFromGallery();
-                    //         if (addController.productImagePath.value != '') {
-                    //           // setState(() {
-                    //           //   if (controller.isNoProductImageChecked.value) {
-                    //           //     controller.isGestureTapDisabled.value = true;
-                    //           //   }
-                    //           // });
-                    //         }
-                    //       },
                     onTap: () => addController.pickProductImageFromGallery(),
                     child: Obx(
                       () => addController.productImagePath.value == ''
@@ -190,7 +170,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                                     .subtract(const Duration(days: 0)),
                                 lastDate: DateTime(2099),
                               );
-
                               addController
                                       .offerProductStartDateController.text =
                                   startDate == null
@@ -224,7 +203,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                                     .subtract(const Duration(days: 0)),
                                 lastDate: DateTime(2099),
                               );
-
                               addController.offerProductEndDateController.text =
                                   endDate == null
                                       ? ''
@@ -282,32 +260,7 @@ class OAYSOfferAddScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(30, 0, 15, 0),
                           child: ElevatedButton(
                             onPressed: () async {
-                              // setState(() {
-                              //   addController.isProductSuccess.value = true;
-                              // });
                               addController.addProduct();
-                              //   addController.addProduct()?.then((value) {
-                              //     Get.snackbar(
-                              //       'Info',
-                              //       value,
-                              //       snackPosition: SnackPosition.BOTTOM,
-                              //       colorText: Colors.black,
-                              //       backgroundColor: boxFillColor,
-                              //     );
-                              //     // setState(() {
-                              //     //   controller.isProductSuccess.value = false;
-                              //     //   // controller.isNoProductImageChecked.value =
-                              //     //   //     false;
-                              //     //   if (value.contains('Successfully')) {
-                              //     //     print(value);
-                              //     //     controller.productImagePath.value = '';
-                              //     //     controller.isGestureTapDisabled.value =
-                              //     //         false;
-                              //     //     controller.isNoProductImageChecked.value =
-                              //     //         false;
-                              //     //   }
-                              //     // });
-                              //   });
                             },
                             child: const Text("Add"),
                           ),
@@ -318,12 +271,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(15, 0, 30, 0),
                           child: ElevatedButton(
                             onPressed: () async {
-                              // setState(() {
-                              //   controller.isNoProductImageChecked.value =
-                              //       false;
-                              //   controller.productImagePath.value = '';
-                              //   controller.isGestureTapDisabled.value = false;
-                              // });
                               addController.cancelProduct();
                             },
                             child: const Text("Cancel"),
@@ -338,20 +285,26 @@ class OAYSOfferAddScreen extends StatelessWidget {
             ),
           ),
         ),
+        Obx(
+          () => addController.isProductSuccess.value
+              ? const Stack(
+                  children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: ModalBarrier(
+                        color: Colors.black,
+                        dismissible: false,
+                      ),
+                    ),
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                )
+              : Container(),
+        )
       ],
     );
-  }
-
-  _selectImageFromGallery() async {
-    // XFile? file = await ImagePicker()
-    //     .pickImage(source: ImageSource.gallery, imageQuality: 50);
-    addController.productImageFile = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 50);
-    if (addController.productImageFile != null) {
-      return addController.productImageFile?.path;
-    } else {
-      return '';
-    }
   }
 
   _getFormattedDate(DateTime dateTime) {

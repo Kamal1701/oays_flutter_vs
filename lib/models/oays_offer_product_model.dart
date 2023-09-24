@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class OAYSOfferProduct {
   String offerProductId;
   String offerImageUrl;
@@ -87,5 +89,51 @@ class OAYSOfferProduct {
       data['shopState'],
       data['shopPincode'],
     );
+  }
+
+  OAYSOfferProduct.fromDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> docSnap)
+      : offerProductId = docSnap.data()!['offerProductId'],
+        offerImageUrl = docSnap.data()!['offerImageUrl'],
+        isOfferImageBlank = docSnap.data()!['isOfferImageBlank'],
+        offerProductName = docSnap.data()!['offerProductName'],
+        offerProductBrandName = docSnap.data()!['offerProductBrandName'],
+        offerProductCategory = docSnap.data()!['offerProductCategory'],
+        offerProductSubcategory = docSnap.data()!['offerProductSubcategory'],
+        offerProductActualPrice = docSnap.data()!['offerProductActualPrice'],
+        offerProductDiscountPrice =
+            docSnap.data()!['offerProductDiscountPrice'],
+        offerProductStartDate = docSnap.data()!['offerProductStartDate'],
+        offerProductEndDate = docSnap.data()!['offerProductEndDate'],
+        offerProductWeigh = docSnap.data()!['offerProductWeigh'],
+        offerProductDiscountPerc = docSnap.data()!['offerProductDiscountPerc'],
+        offerProductDescription = docSnap.data()!['offerProductDescription'],
+        shopName = docSnap.data()!['shopName'],
+        shopStreetName = docSnap.data()!['shopStreetName'],
+        shopCity = docSnap.data()!['shopCity'],
+        shopState = docSnap.data()!['shopState'],
+        shopPincode = docSnap.data()!['shopPincode'];
+
+  factory OAYSOfferProduct.fromSnapshot(DocumentSnapshot docSnap) {
+    return OAYSOfferProduct(
+        docSnap.id,
+        docSnap['offerImageUrl'],
+        docSnap['isOfferImageBlank'],
+        docSnap['offerProductName'],
+        docSnap['offerProductBrandName'],
+        docSnap['offerProductCategory'],
+        docSnap['offerProductSubcategory'],
+        docSnap['offerProductActualPrice'],
+        docSnap['offerProductDiscountPrice'],
+        docSnap['offerProductStartDate'],
+        docSnap['offerProductEndDate'],
+        docSnap['offerProductWeigh'],
+        docSnap['offerProductDiscountPerc'],
+        docSnap['offerProductDescription'],
+        docSnap['shopName'],
+        docSnap['shopStreetName'],
+        docSnap['shopCity'],
+        docSnap['shopState'],
+        docSnap['shopPincode']);
   }
 }

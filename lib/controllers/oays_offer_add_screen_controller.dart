@@ -21,6 +21,7 @@ class OAYSOfferAddScreenController extends GetxController {
   final productImagePath = ''.obs;
   final isNoProductImage = false.obs;
   final productImageUrl = ''.obs;
+  final isProductSuccess = false.obs;
   late XFile? productImageFile;
 
   var offerId = '';
@@ -43,7 +44,7 @@ class OAYSOfferAddScreenController extends GetxController {
   }
 
   pickProductImageFromGallery() async {
-    if (isGestureTapDisabled.value) {
+    if (isGestureTapDisabled.value && isNoProductImage.value) {
       _showMessage('To add image, please uncheck no product image.');
     } else {
       productImagePath.value = await _selectImageFromGallery();
@@ -64,8 +65,6 @@ class OAYSOfferAddScreenController extends GetxController {
   }
 
   _selectImageFromGallery() async {
-    // XFile? file = await ImagePicker()
-    //     .pickImage(source: ImageSource.gallery, imageQuality: 50);
     productImageFile = await ImagePicker()
         .pickImage(source: ImageSource.gallery, imageQuality: 50);
     if (productImageFile != null) {
@@ -88,16 +87,13 @@ class OAYSOfferAddScreenController extends GetxController {
         offerProductWeightController.text.isEmpty ||
         offerProductDescriptionController.text.isEmpty) {
       _showMessage('Please fill the required details.');
-      // print(userController.oaysUser.userName);
-      // return 'Please fill the required details.';
     } else if (!isNoProductImage.value && productImagePath.value == '') {
       _showMessage('Please add offer product image.');
-      // return 'Please add offer product image.';
     } else {
       DateFormat dateFormat = DateFormat('dd-MM-yyyy');
       final startDate = dateFormat.parse(offerProductStartDateController.text);
       final endDate = dateFormat.parse(offerProductEndDateController.text);
-      // isProductSuccess.value = true;
+      isProductSuccess.value = true;
       if (startDate.compareTo(endDate) <= 0) {
         if (isNoProductImage.value) {
           productImageUrl.value = '';
@@ -147,19 +143,15 @@ class OAYSOfferAddScreenController extends GetxController {
         if (status == 'Success') {
           clearScreen();
           _showMessage('Offer Added Successfully.');
-          // return 'Offer Added Successfully.';
         } else {
           clearScreen();
           _showMessage(status);
-          // return status;
         }
+        isProductSuccess.value = false;
       } else {
         _showMessage('Offer end date should be greater than offer start date');
-        // return 'Offer end date should be greater than offer start date';
       }
-      // return 'Success';
     }
-    // return 'Success';
   }
 
   Future<void> cancelProduct() async {
@@ -167,6 +159,7 @@ class OAYSOfferAddScreenController extends GetxController {
   }
 
   void clearScreen() {
+    isNoProductImage.value = false;
     productImagePath.value = '';
     offerProductNameController.text = '';
     offerProductBrandController.text = '';

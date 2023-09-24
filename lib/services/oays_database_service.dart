@@ -148,26 +148,24 @@ class OAYSDatabaseService {
     }
   }
 
-  // Stream<List<OAYSOfferProduct>> getOfferProductStream(String uid) {
-  //   return _db
-  //       .collection(customerProfile)
-  //       .doc(uid)
-  //       .collection(offerProductDetail)
-  //       // .orderBy("createdDate", descending: true)
-  //       .snapshots()
-  //       .map((QuerySnapshot query) {
-  //     List<OAYSOfferProduct> retVal = [];
-  //     print(query.docs.length);
-  //     for (var element in query.docs) {
-  //       retVal.add(OAYSOfferProduct.fromDocumentSnapshot(
-  //           element as DocumentSnapshot<Map<String, dynamic>>));
-  //       print(retVal);
-  //     }
-  //     return retVal;
-  //   });
-  // }
+  Stream<List<OAYSOfferProduct>> getOfferProductStream(String uid) {
+    return _db
+        .collection(productDetail)
+        .doc(uid)
+        .collection(offerProductDetail)
+        // .orderBy("createdDate", descending: true)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      List<OAYSOfferProduct> offerProduct = [];
+      for (var element in query.docs) {
+        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshot(
+            element as DocumentSnapshot<Map<String, dynamic>>));
+      }
+      return offerProduct;
+    });
+  }
 
-  // List<OAYSOfferProduct> getOfferProductStream2(String uid) {
+  // Stream<List<OAYSOfferProduct>> getOfferProductStream2(String uid) {
   //   final Stream<QuerySnapshot> offerProductStream = _db
   //       .collection(productDetail)
   //       .doc(uid)
@@ -175,8 +173,6 @@ class OAYSDatabaseService {
   //       // .orderBy("createdDate", descending: true)
   //       .snapshots();
   //   List<OAYSOfferProduct> offerProduct = [];
-  //   print('object');
-  //   print(offerProductStream.length);
   //   offerProductStream
   //       .map((query) {
   //         return query.docs.map((doc) {
@@ -189,7 +185,7 @@ class OAYSDatabaseService {
   //   return offerProduct;
   // }
 
-  Future<List<OAYSOfferProduct>> getOfferProductStream(String userId) async {
+  Future<List<OAYSOfferProduct>> getOfferProductNonStream(String userId) async {
     List<OAYSOfferProduct> productList = [];
     var querySnapshot = await _db
         .collection(productDetail)

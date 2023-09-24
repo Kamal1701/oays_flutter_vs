@@ -147,9 +147,10 @@ class OAYSOfferAddScreenController extends GetxController {
           clearScreen();
           _showMessage(status);
         }
-        isProductSuccess.value = false;
+        isProductSuccess.value = !isProductSuccess.value;
       } else {
         _showMessage('Offer end date should be greater than offer start date');
+        isProductSuccess.value = !isProductSuccess.value;
       }
     }
   }

@@ -21,7 +21,7 @@ class OAYSOfferAddScreenController extends GetxController {
   final productImagePath = ''.obs;
   final isNoProductImage = false.obs;
   final productImageUrl = ''.obs;
-  final isProductSuccess = false.obs;
+  final isAddProductSuccess = false.obs;
   late XFile? productImageFile;
 
   var offerId = '';
@@ -93,7 +93,7 @@ class OAYSOfferAddScreenController extends GetxController {
       DateFormat dateFormat = DateFormat('dd-MM-yyyy');
       final startDate = dateFormat.parse(offerProductStartDateController.text);
       final endDate = dateFormat.parse(offerProductEndDateController.text);
-      isProductSuccess.value = true;
+      isAddProductSuccess.value = true;
       if (startDate.compareTo(endDate) <= 0) {
         if (isNoProductImage.value) {
           productImageUrl.value = '';
@@ -147,10 +147,10 @@ class OAYSOfferAddScreenController extends GetxController {
           clearScreen();
           _showMessage(status);
         }
-        isProductSuccess.value = !isProductSuccess.value;
+        isAddProductSuccess.value = !isAddProductSuccess.value;
       } else {
         _showMessage('Offer end date should be greater than offer start date');
-        isProductSuccess.value = !isProductSuccess.value;
+        isAddProductSuccess.value = !isAddProductSuccess.value;
       }
     }
   }

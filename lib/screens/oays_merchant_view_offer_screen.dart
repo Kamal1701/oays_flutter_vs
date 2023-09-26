@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oaysflutter/controllers/oays_merchant_view_offer_screen_controller.dart';
 import 'package:oaysflutter/controllers/oays_offer_product_model_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSMerchantViewOfferScreen extends StatelessWidget {
   final productController = Get.put(OAYSOfferProductController());
+  final viewOfferController = Get.put(OAYSMerchantViewOfferScreenController());
   OAYSMerchantViewOfferScreen({super.key});
 
   @override
@@ -33,6 +35,10 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: InkWell(
                                 onTap: () {
+                                  viewOfferController
+                                      .goToOAYSMerchantEditOfferPage(
+                                          productController
+                                              .offerProductList[index]);
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(

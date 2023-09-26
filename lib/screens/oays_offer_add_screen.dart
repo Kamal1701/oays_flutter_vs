@@ -16,7 +16,7 @@ class OAYSOfferAddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => addController.isProductSuccess.value
+      () => addController.isAddProductSuccess.value
           ? progressIndicator()
           : Stack(
               children: [

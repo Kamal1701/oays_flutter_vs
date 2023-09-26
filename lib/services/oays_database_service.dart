@@ -153,7 +153,7 @@ class OAYSDatabaseService {
         .collection(productDetail)
         .doc(uid)
         .collection(offerProductDetail)
-        // .orderBy("createdDate", descending: true)
+        .orderBy("createdDate", descending: true)
         .snapshots()
         .map((QuerySnapshot query) {
       List<OAYSOfferProduct> offerProduct = [];
@@ -164,26 +164,6 @@ class OAYSDatabaseService {
       return offerProduct;
     });
   }
-
-  // Stream<List<OAYSOfferProduct>> getOfferProductStream2(String uid) {
-  //   final Stream<QuerySnapshot> offerProductStream = _db
-  //       .collection(productDetail)
-  //       .doc(uid)
-  //       .collection(offerProductDetail)
-  //       // .orderBy("createdDate", descending: true)
-  //       .snapshots();
-  //   List<OAYSOfferProduct> offerProduct = [];
-  //   offerProductStream
-  //       .map((query) {
-  //         return query.docs.map((doc) {
-  //           return OAYSOfferProduct.fromSnapshot(doc);
-  //         }).toList();
-  //       })
-  //       .toList()
-  //       .then((value) => offerProduct);
-
-  //   return offerProduct;
-  // }
 
   Future<List<OAYSOfferProduct>> getOfferProductNonStream(String userId) async {
     List<OAYSOfferProduct> productList = [];

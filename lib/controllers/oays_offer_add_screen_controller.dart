@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
+import 'package:oaysflutter/screens/oays_offer_near_me_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
@@ -157,6 +158,7 @@ class OAYSOfferAddScreenController extends GetxController {
 
   Future<void> cancelProduct() async {
     clearScreen();
+    Get.off(() => const OAYSOfferNearMeScreen());
   }
 
   void clearScreen() {

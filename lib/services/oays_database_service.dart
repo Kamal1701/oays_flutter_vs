@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
-import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/models/oays_user_model.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
@@ -9,6 +8,10 @@ class OAYSDatabaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   Map<String, dynamic> timeTracker = {
     'createdDate': FieldValue.serverTimestamp(),
+    'updatedDate': FieldValue.serverTimestamp()
+  };
+
+  Map<String, dynamic> updateTimeTracker = {
     'updatedDate': FieldValue.serverTimestamp()
   };
 
@@ -102,44 +105,34 @@ class OAYSDatabaseService {
             .update(timeTracker);
       });
 
-      // await _db
-      //     .collection(productDetail)
-      //     .doc(userId)
-      //     .set(Map.of({'_id': userId}))
-      //     .whenComplete(() async {
-      //   productSubCollectionId = _db
-      //       .collection(productDetail)
-      //       .doc(userId)
-      //       .collection(offerProductDetail)
-      //       .doc()
-      //       .id;
-      //   _db
-      //       .collection(productDetail)
-      //       .doc(userId)
-      //       .collection(offerProductDetail)
-      //       .doc(productSubCollectionId)
-      //       .set(op.toMap())
-      //       .whenComplete(() {
-      //     timeTracker['offerProductId'] = productSubCollectionId;
-      //     _db
-      //         .collection(productDetail)
-      //         .doc(userId)
-      //         .collection(offerProductDetail)
-      //         .doc(productSubCollectionId)
-      //         .update(timeTracker);
-      //     // _db
-      //     //     .collection(productDetail)
-      //     //     .doc(userId)
-      //     //     .collection(offerProductDetail)
-      //     //     .doc(productSubCollectionId)
-      //     //     .update(
-      //     //       Map.of(
-      //     //         {'offerProductId': productSubCollectionId},
-      //     //       ),
-      //     //     );
-      //     // Get.offAll(() => const OAYSSignInScreen());
-      //   });
-      // });
+      return 'Success';
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Unable to add product now. Please try again later.';
+    }
+  }
+
+  Future<String> updateOfferProduct(
+      OAYSOfferProduct op, String userId, String offerId) async {
+    try {
+      // String productSubCollectionId;
+      // String userId = Get.find<OAYSAuthenticationController>().user!.uid;
+      await _db
+          .collection(productDetail)
+          .doc(userId)
+          .collection(offerProductDetail)
+          .doc(offerId)
+          .update(op.toMap())
+          .whenComplete(() {
+        _db
+            .collection(productDetail)
+            .doc(userId)
+            .collection(offerProductDetail)
+            .doc(offerId)
+            .update(updateTimeTracker);
+      });
+
       return 'Success';
     } on FirebaseException catch (e) {
       return e.message.toString();
@@ -153,7 +146,7 @@ class OAYSDatabaseService {
         .collection(productDetail)
         .doc(uid)
         .collection(offerProductDetail)
-        .orderBy("createdDate", descending: true)
+        .orderBy("updatedDate", descending: true)
         .snapshots()
         .map((QuerySnapshot query) {
       List<OAYSOfferProduct> offerProduct = [];
@@ -180,5 +173,60 @@ class OAYSDatabaseService {
     }
 
     return productList;
+  }
+
+  Future<String> deleteOfferProduct(String userId, String offerId) async {
+    try {
+      await _db
+          .collection(productDetail)
+          .doc(userId)
+          .collection(offerProductDetail)
+          .doc(offerId)
+          .delete();
+      return 'Success';
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Unable to add product now. Please try again later.';
+    }
+  }
+
+  Future<String> deleteOfferProductWithImageUrl(
+      String userId, String offerId, String imageUrl) async {
+    try {
+      await _db
+          .collection(productDetail)
+          .doc(userId)
+          .collection(offerProductDetail)
+          .doc(offerId)
+          .delete()
+          .whenComplete(() {
+        try {
+          final storageReference =
+              FirebaseStorage.instance.ref().child(imageUrl);
+          storageReference.delete();
+          // print("Image deleted successfully!");
+        } catch (e) {
+          print("Error deleting image: $e");
+          // return e.toString();
+        }
+      });
+      return 'Success';
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Unable to delete the product now. Please try again later.';
+    }
+  }
+
+  Future<void> deleteImageReference(String imageUrl) async {
+    try {
+      final storageReference = FirebaseStorage.instance.refFromURL(imageUrl);
+      // ref().child(imageUrl);
+      await storageReference.delete();
+      // print("Image deleted successfully!");
+    } catch (e) {
+      print("Error deleting image: $e");
+    }
   }
 }

@@ -8,13 +8,13 @@ import 'package:oaysflutter/controllers/oays_merchant_edit_offer_screen_controll
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
+import 'package:oaysflutter/utils/helpers/drawer_widget.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
-class OAYSMerchantEditOfferScreen extends StatelessWidget {
-  final offerProduct = Get.arguments as OAYSOfferProduct;
-  final updateController = Get.put(
-      OAYSMerchantEditOfferScreenController(Get.arguments as OAYSOfferProduct));
-  OAYSMerchantEditOfferScreen({super.key});
+class OAYSMerchantModifyOfferScreen extends StatelessWidget {
+  final updateController = Get.put(OAYSMerchantModifyOfferScreenController(
+      Get.arguments as OAYSOfferProduct));
+  OAYSMerchantModifyOfferScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class OAYSMerchantEditOfferScreen extends StatelessWidget {
           ? progressIndicator()
           : Scaffold(
               appBar: AppBar(
-                title: const Text('Edit Offer'),
+                title: const Text(modifyOffer),
                 backgroundColor: backgroundDarkColor,
-                titleTextStyle: TextStyle(fontSize: 18, color: oaysFontColor),
               ),
+              // drawer: OAYSNavigationDrawer(),
               body: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -48,7 +48,7 @@ class OAYSMerchantEditOfferScreen extends StatelessWidget {
                               updateController.pickProductImageFromGallery(),
                           child: Obx(
                             () => updateController.productImagePath.value == ''
-                                ? Image.asset(defaultImagePath,
+                                ? Image.asset(defaultUpdateImagePath,
                                     height: 200, width: 200, fit: BoxFit.fill)
                                 : updateController.isProductNewImage.value
                                     ? Image.file(
@@ -79,8 +79,6 @@ class OAYSMerchantEditOfferScreen extends StatelessWidget {
                                   value:
                                       updateController.isNoProductImage.value,
                                   onChanged: (value) {
-                                    print('onchange');
-                                    print(value);
                                     updateController
                                         .onClickNoProductImageCheckbox(value);
                                   },
@@ -290,9 +288,9 @@ class OAYSMerchantEditOfferScreen extends StatelessWidget {
                                     const EdgeInsets.fromLTRB(30, 0, 15, 0),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    // addController.addProduct();
+                                    updateController.updateProduct();
                                   },
-                                  child: const Text("Add"),
+                                  child: const Text("Update"),
                                 ),
                               ),
                             ),
@@ -302,9 +300,9 @@ class OAYSMerchantEditOfferScreen extends StatelessWidget {
                                     const EdgeInsets.fromLTRB(15, 0, 30, 0),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    // updateController.cancelProduct();
+                                    updateController.deleteProduct();
                                   },
-                                  child: const Text("Cancel"),
+                                  child: const Text("Delete"),
                                 ),
                               ),
                             ),

@@ -1,11 +1,18 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
+import 'package:oaysflutter/screens/oays_merchant_view_offer_screen.dart';
+import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/string_constant.dart';
 
-class OAYSMerchantEditOfferScreenController extends GetxController {
+class OAYSMerchantModifyOfferScreenController extends GetxController {
   OAYSUserController userController =
       Get.put<OAYSUserController>(OAYSUserController());
 
@@ -21,9 +28,9 @@ class OAYSMerchantEditOfferScreenController extends GetxController {
   OAYSOfferProduct oaysOfferProduct = OAYSOfferProduct('', '', true, '', '', '',
       '', '', '', '', '', '', '', '', '', '', '', '', '');
 
-  OAYSMerchantEditOfferScreenController(this.oaysOfferProduct);
+  OAYSMerchantModifyOfferScreenController(this.oaysOfferProduct);
 
-  var offerId = '';
+  // var offerId = '';
   final offerProductNameController = TextEditingController();
   final offerProductBrandController = TextEditingController();
   final offerProductCategoryController = TextEditingController();
@@ -36,6 +43,8 @@ class OAYSMerchantEditOfferScreenController extends GetxController {
   final offerProductDiscountPercentController = TextEditingController();
   final offerProductDescriptionController = TextEditingController();
 
+  final _storageInstance = FirebaseStorage.instance;
+
   @override
   void onInit() {
     super.onInit();
@@ -47,42 +56,12 @@ class OAYSMerchantEditOfferScreenController extends GetxController {
     if (isGestureTapDisabled.value && isNoProductImage.value) {
       _showMessage('To add image, please uncheck no product image.');
     } else {
-      // if (productImageUrl.value != '') {
-      //   productImagePath.value = await _selectImageFromGallery();
-
-      //   if (productImagePath.value == '') {
-      //     isProductNewImage.value = false;
-      //     productImagePath.value = productImageUrl.value;
-      //   } else if (productImagePath.value != '') {
-      //     isProductNewImage.value = true;
-      //   }
-      // } else {
-      //   productImagePath.value = await _selectImageFromGallery();
-      //   if (productImagePath.value != '') {
-      //     isProductNewImage.value = true;
-      //   }
       productImagePath.value = await _selectImageFromGallery();
-      // if (isNetworkUrlAvailable) {
-      //   // productImagePath.value = await _selectImageFromGallery();
-
-      //   if (productImagePath.value == '') {
-      //     isProductNewImage.value = false;
-      //     productImagePath.value = productImageUrl.value;
-      //   } else {
-      //     isProductNewImage.value = true;
-      //   }
-      // } else {
-      //   // productImagePath.value = await _selectImageFromGallery();
-      //   if (productImagePath.value != '') {
-      //     isProductNewImage.value = true;
-      //   }
-      // }
 
       if (productImagePath.value != '') {
         isProductNewImage.value = true;
       } else {
         if (isNetworkUrlAvailable) {
-          // productImagePath.value = await _selectImageFromGallery();
           isProductNewImage.value = false;
           productImagePath.value = productImageUrl.value;
         }
@@ -100,9 +79,6 @@ class OAYSMerchantEditOfferScreenController extends GetxController {
       productImagePath.value = '';
       isGestureTapDisabled.value = isChecked;
     } else {
-      // if (productImageUrl.value != '') {
-      //   productImagePath.value = productImageUrl.value;
-      // }
       if (isNetworkUrlAvailable) {
         productImagePath.value = productImageUrl.value;
       }
@@ -121,23 +97,21 @@ class OAYSMerchantEditOfferScreenController extends GetxController {
     }
   }
 
-  void clearScreen() {
-    isNoProductImage.value = false;
-    productImagePath.value = '';
-    offerProductNameController.text = '';
-    offerProductBrandController.text = '';
-    offerProductCategoryController.text = '';
-    offerProductSubCategoryController.text = '';
-    offerProductActualPriceController.text = '';
-    offerProductDiscountPriceController.text = '';
-    offerProductDiscountPercentController.text = '';
-    offerProductStartDateController.text = '';
-    offerProductEndDateController.text = '';
-    offerProductWeightController.text = '';
-    offerProductDescriptionController.text = '';
+  void deleteProduct() async {
+    String? status = await OAYSDatabaseService().deleteOfferProduct(
+        userController.oaysUser.userId, oaysOfferProduct.offerProductId);
+    if (status == 'Success') {
+      if (!oaysOfferProduct.isOfferImageBlank) {
+        await _deleteImageReference(oaysOfferProduct.offerImageUrl);
+      }
+      _showMessage('Offer Product deleted successfully');
+      Get.off(() => OAYSMerchantViewOfferScreen());
+    } else {
+      _showMessage(status);
+    }
   }
 
-  _showMessage(String info) {
+  void _showMessage(String info) {
     Get.snackbar(
       'Info',
       info,
@@ -147,28 +121,117 @@ class OAYSMerchantEditOfferScreenController extends GetxController {
     );
   }
 
-  getOfferProduct(OAYSOfferProduct offerId) {
-    productImageUrl.value = offerId.offerImageUrl;
-    productImagePath.value = offerId.offerImageUrl;
-    isNoProductImage.value = offerId.isOfferImageBlank;
+  void getOfferProduct(OAYSOfferProduct offerProduct) {
+    productImageUrl.value = offerProduct.offerImageUrl;
+    productImagePath.value = offerProduct.offerImageUrl;
+    isNoProductImage.value = offerProduct.isOfferImageBlank;
     if (isNoProductImage.value) {
       isGestureTapDisabled.value = true;
     } else {
       isGestureTapDisabled.value = false;
       isNetworkUrlAvailable = true;
     }
-    offerProductNameController.text = offerId.offerProductName;
-    offerProductBrandController.text = offerId.offerProductBrandName;
-    offerProductCategoryController.text = offerId.offerProductCategory;
-    offerProductSubCategoryController.text = offerId.offerProductSubcategory;
-    offerProductActualPriceController.text = offerId.offerProductActualPrice;
+    offerProductNameController.text = offerProduct.offerProductName;
+    offerProductBrandController.text = offerProduct.offerProductBrandName;
+    offerProductCategoryController.text = offerProduct.offerProductCategory;
+    offerProductSubCategoryController.text =
+        offerProduct.offerProductSubcategory;
+    offerProductActualPriceController.text =
+        offerProduct.offerProductActualPrice;
     offerProductDiscountPriceController.text =
-        offerId.offerProductDiscountPrice;
-    offerProductStartDateController.text = offerId.offerProductStartDate;
-    offerProductEndDateController.text = offerId.offerProductEndDate;
-    offerProductWeightController.text = offerId.offerProductWeigh;
+        offerProduct.offerProductDiscountPrice;
+    offerProductStartDateController.text = offerProduct.offerProductStartDate;
+    offerProductEndDateController.text = offerProduct.offerProductEndDate;
+    offerProductWeightController.text = offerProduct.offerProductWeigh;
     offerProductDiscountPercentController.text =
-        offerId.offerProductDiscountPerc;
-    offerProductDescriptionController.text = offerId.offerProductDescription;
+        offerProduct.offerProductDiscountPerc;
+    offerProductDescriptionController.text =
+        offerProduct.offerProductDescription;
+  }
+
+  Future<void> updateProduct() async {
+    if (offerProductNameController.text.isEmpty ||
+        offerProductBrandController.text.isEmpty ||
+        offerProductCategoryController.text.isEmpty ||
+        offerProductSubCategoryController.text.isEmpty ||
+        offerProductActualPriceController.text.isEmpty ||
+        offerProductDiscountPriceController.text.isEmpty ||
+        offerProductDiscountPercentController.text.isEmpty ||
+        offerProductStartDateController.text.isEmpty ||
+        offerProductEndDateController.text.isEmpty ||
+        offerProductWeightController.text.isEmpty ||
+        offerProductDescriptionController.text.isEmpty) {
+      _showMessage('Please fill the required details.');
+    } else if (!isNoProductImage.value && productImagePath.value == '') {
+      _showMessage('Please add offer product image.');
+    } else {
+      DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+      final startDate = dateFormat.parse(offerProductStartDateController.text);
+      final endDate = dateFormat.parse(offerProductEndDateController.text);
+      isUpdateProductSuccess.value = true;
+      if (startDate.compareTo(endDate) <= 0) {
+        if (isProductNewImage.value) {
+          final Reference storageReference = _storageInstance.ref().child(
+                '$offerProductImagePath/${DateTime.now().millisecondsSinceEpoch.toString()}',
+              );
+
+          UploadTask uploadTask =
+              storageReference.putFile(File(productImageFile!.path));
+          await uploadTask.whenComplete(() async {
+            productImageUrl.value = await storageReference.getDownloadURL();
+          });
+          if (oaysOfferProduct.offerImageUrl != '') {
+            await _deleteImageReference(oaysOfferProduct.offerImageUrl);
+          }
+        } else {
+          if (isNoProductImage.value) {
+            productImageUrl.value = '';
+            if (!oaysOfferProduct.isOfferImageBlank) {
+              await _deleteImageReference(oaysOfferProduct.offerImageUrl);
+            }
+          } else {
+            productImageUrl.value = oaysOfferProduct.offerImageUrl;
+          }
+        }
+        OAYSOfferProduct op = OAYSOfferProduct(
+          oaysOfferProduct.offerProductId,
+          productImageUrl.value,
+          isNoProductImage.value,
+          offerProductNameController.text.trim(),
+          offerProductBrandController.text.trim(),
+          offerProductCategoryController.text.trim(),
+          offerProductSubCategoryController.text.trim(),
+          offerProductActualPriceController.text.trim(),
+          offerProductDiscountPriceController.text.trim(),
+          offerProductStartDateController.text,
+          offerProductEndDateController.text,
+          offerProductWeightController.text.trim(),
+          offerProductDiscountPercentController.text.trim(),
+          offerProductDescriptionController.text.trim(),
+          userController.oaysUser.shopName,
+          userController.oaysUser.shopStreetName,
+          userController.oaysUser.shopCity,
+          userController.oaysUser.shopState,
+          userController.oaysUser.shopPincode,
+        );
+        String? status = await OAYSDatabaseService().updateOfferProduct(op,
+            userController.oaysUser.userId, oaysOfferProduct.offerProductId);
+        if (status == 'Success') {
+          _showMessage('Offer updated Successfully.');
+          Get.off(() => OAYSMerchantViewOfferScreen());
+        } else {
+          _showMessage(status);
+        }
+        isUpdateProductSuccess.value = !isUpdateProductSuccess.value;
+      } else {
+        _showMessage('Offer end date should be greater than offer start date');
+        isUpdateProductSuccess.value = !isUpdateProductSuccess.value;
+      }
+    }
+  }
+
+  Future<void> _deleteImageReference(String firestoreImageUrl) async {
+    final storageReference = _storageInstance.refFromURL(firestoreImageUrl);
+    await storageReference.delete();
   }
 }

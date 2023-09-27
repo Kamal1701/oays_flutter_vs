@@ -12,61 +12,52 @@ class OAYSHomeScreenDrawerController extends GetxController {
   static OAYSHomeScreenDrawerController get instance => Get.find();
 
   var pageTitle = offerNearMe.obs;
-  var container;
+  // var container;
 
   final selectedIndex = 0.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    setSelectedMenuIndex(selectedIndex.value);
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   setSelectedMenuIndex(selectedIndex.value);
+  // }
 
   void setSelectedMenuIndex(int index) {
     selectedIndex.value = index;
 
     switch (selectedIndex.value) {
       case 0:
-        pageTitle.value = offerNearMe;
-        container = const OAYSOfferNearMeScreen();
+        // pageTitle.value = offerNearMe;
+        // container = const OAYSOfferNearMeScreen();
+        Get.back();
+        Get.off(() => const OAYSOfferNearMeScreen());
 
       case 1:
-        pageTitle.value = allOffers;
-        container = const OAYSAllOffersScreen();
+        // pageTitle.value = allOffers;
+        Get.back();
+        Get.off(() => const OAYSAllOffersScreen());
+      // container = const OAYSAllOffersScreen();
 
       case 2:
-        pageTitle.value = profile;
-        container = const OAYSCustomerProfileScreen();
-      // ? const OAYSMerchantProfileScreen()
-      // :
+        // pageTitle.value = profile;
+        // container = const OAYSCustomerProfileScreen();
+        // ? const OAYSMerchantProfileScreen()
+        // :
+        Get.back();
+        Get.off(() => const OAYSCustomerProfileScreen());
 
       case 3:
-        pageTitle.value = addOfferProduct;
-        container = OAYSOfferAddScreen();
+        // pageTitle.value = addOfferProduct;
+        // container = OAYSOfferAddScreen();
+        Get.back();
+        Get.off(() => OAYSOfferAddScreen());
 
       case 4:
-        pageTitle.value = updateOffer;
-        container = OAYSMerchantViewOfferScreen();
+        // pageTitle.value = updateOffer;
+        // container = OAYSMerchantViewOfferScreen();
+        Get.back();
+        Get.off(() => OAYSMerchantViewOfferScreen());
     }
     update();
   }
-
-  // void onItemTap(int index) {
-  //   if (selectedIndex.value == 0) {
-  //     container = const OAYSOfferNearMeScreen();
-  //     update();
-  //   } else if (selectedIndex.value == 1) {
-  //     container = const OAYSAllOffersScreen();
-  //     update();
-  //   } else if (selectedIndex.value == 2) {
-  //     container = const OAYSAllOffersScreen();
-  //     update();
-  //   } else if (selectedIndex.value == 3) {
-  //     container = OAYSOfferAddScreen();
-  //     update();
-  //   } else if (selectedIndex.value == 4) {
-  //     container = OAYSMerchantViewOfferScreen();
-  //     update();
-  //   }
-  // }
 }

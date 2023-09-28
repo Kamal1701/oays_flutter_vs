@@ -158,7 +158,7 @@ class OAYSOfferAddScreenController extends GetxController {
 
   Future<void> cancelProduct() async {
     clearScreen();
-    Get.off(() => const OAYSOfferNearMeScreen());
+    Get.off(() => OAYSOfferNearMeScreen());
   }
 
   void clearScreen() {

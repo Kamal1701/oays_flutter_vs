@@ -31,7 +31,7 @@ class OAYSSignInScreenController extends GetxController {
         _showMessage(error.toString());
       } else {
         _showMessage('Logged-in successfully');
-        Get.to(() => const OAYSOfferNearMeScreen());
+        Get.to(() => OAYSOfferNearMeScreen());
       }
     }
   }

@@ -31,8 +31,8 @@ class OAYSOfferProductController extends GetxController {
     //   isLoading.value = false;
     // });
 
-    _offerProductList
-        .bindStream(OAYSDatabaseService().getOfferProductStream(uid));
+    _offerProductList.bindStream(
+        OAYSDatabaseService().getOfferProductStreamByUserIdForMerchant(uid));
     isLoading.value = false; //stream coming from firebase
   }
 

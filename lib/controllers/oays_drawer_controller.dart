@@ -30,12 +30,12 @@ class OAYSHomeScreenDrawerController extends GetxController {
         // pageTitle.value = offerNearMe;
         // container = const OAYSOfferNearMeScreen();
         Get.back();
-        Get.off(() => const OAYSOfferNearMeScreen());
+        Get.off(() => OAYSOfferNearMeScreen());
 
       case 1:
         // pageTitle.value = allOffers;
         Get.back();
-        Get.off(() => const OAYSAllOffersScreen());
+        Get.off(() => OAYSAllOffersScreen());
       // container = const OAYSAllOffersScreen();
 
       case 2:

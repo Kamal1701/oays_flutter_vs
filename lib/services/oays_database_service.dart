@@ -258,7 +258,7 @@ class OAYSDatabaseService {
       final CollectionReference subcollection =
           document.reference.collection(offerProductDetail);
       final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
-          await subcollection.orderBy("updatedDate", descending: true).get()
+          await subcollection.orderBy("updatedDate", descending: false).get()
               as QuerySnapshot<Map<String, dynamic>>;
 
       for (final QueryDocumentSnapshot subcollectionDocument

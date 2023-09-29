@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oaysflutter/components/oays_textfield.dart';
@@ -157,23 +158,69 @@ class OAYSMerchantModifyOfferScreen extends StatelessWidget {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                                child: OAYSCustomTextField(
+                                child: TextField(
                                   controller: updateController
                                       .offerProductActualPriceController,
-                                  labelText: "Actual Price",
                                   obscureText: false,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('[0-9.]'))
+                                  ],
+                                  decoration: InputDecoration(
+                                      labelText: "Actual Price",
+                                      labelStyle: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: hintTextColor)),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    color: oaysFontColor,
+                                  ),
                                 ),
+                                // OAYSCustomTextField(
+                                //   controller: updateController
+                                //       .offerProductActualPriceController,
+                                //   labelText: "Actual Price",
+                                //   obscureText: false,
+                                // ),
                               ),
                             ),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: OAYSCustomTextField(
+                                child: TextField(
                                   controller: updateController
                                       .offerProductDiscountPriceController,
-                                  labelText: "Discount Price",
                                   obscureText: false,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('[0-9.]'))
+                                  ],
+                                  decoration: InputDecoration(
+                                      labelText: "Discount Price",
+                                      labelStyle: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: hintTextColor)),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    color: oaysFontColor,
+                                  ),
                                 ),
+                                // OAYSCustomTextField(
+                                //   controller: updateController
+                                //       .offerProductDiscountPriceController,
+                                //   labelText: "Discount Price",
+                                //   obscureText: false,
+                                // ),
                               ),
                             ),
                           ],
@@ -268,12 +315,38 @@ class OAYSMerchantModifyOfferScreen extends StatelessWidget {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: OAYSCustomTextField(
+                                child: TextField(
                                   controller: updateController
                                       .offerProductDiscountPercentController,
-                                  labelText: "Discount %",
                                   obscureText: false,
+                                  onTap: () {
+                                    updateController.doDiscountPercentageCalc();
+                                  },
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp('[0-9.]'))
+                                  ],
+                                  decoration: InputDecoration(
+                                      labelText: "Discount %",
+                                      labelStyle: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: hintTextColor)),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    color: oaysFontColor,
+                                  ),
                                 ),
+                                // OAYSCustomTextField(
+                                //   controller: updateController
+                                //       .offerProductDiscountPercentController,
+                                //   labelText: "Discount %",
+                                //   obscureText: false,
+                                // ),
                               ),
                             ),
                           ],

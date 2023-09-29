@@ -7,8 +7,8 @@ import 'package:oaysflutter/utils/helpers/drawer_widget.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSOfferNearMeScreen extends StatelessWidget {
-  // final productController = Get.put(OAYSOfferNearMeScreenController());
-  final productController = Get.find<OAYSOfferNearMeScreenController>();
+  final productController = Get.put(OAYSOfferNearMeScreenController());
+  // final productController = Get.find<OAYSOfferNearMeScreenController>();
   OAYSOfferNearMeScreen({super.key});
 
   @override

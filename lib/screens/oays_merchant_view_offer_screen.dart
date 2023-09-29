@@ -38,7 +38,7 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             // childAspectRatio: 2.35,
-                            mainAxisExtent: 180,
+                            mainAxisExtent: 178,
                           ),
                           itemCount: productController.offerProductList.length,
                           itemBuilder: (context, index) {

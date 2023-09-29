@@ -43,12 +43,12 @@ class OAYSHomeScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                controller.oaysUser.userName,
+                                userController.oaysUser.userName,
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                controller.oaysUser.userLocation,
+                                userController.oaysUser.userLocation,
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.normal),

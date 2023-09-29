@@ -237,4 +237,20 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
     final storageReference = _storageInstance.refFromURL(firestoreImageUrl);
     await storageReference.delete();
   }
+
+  doDiscountPercentageCalc() {
+    if (offerProductActualPriceController.text.isEmpty ||
+        offerProductDiscountPriceController.text.isEmpty) {
+      _showMessage('Actual price or Discount price is missing');
+    } else if (int.parse(offerProductDiscountPriceController.text) >
+        int.parse(offerProductActualPriceController.text)) {
+      offerProductDiscountPercentController.text = '0.0';
+      _showMessage('Discount price should be less than lower price');
+    } else {
+      int actPrice = int.parse(offerProductActualPriceController.text);
+      int discPrice = int.parse(offerProductDiscountPriceController.text);
+      double discPerc = ((actPrice - discPrice) / actPrice) * 100;
+      offerProductDiscountPercentController.text = discPerc.toString();
+    }
+  }
 }

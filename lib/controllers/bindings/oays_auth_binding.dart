@@ -9,6 +9,6 @@ class OAYSAuthBinding extends Bindings {
     Get.put<OAYSAuthenticationController>(OAYSAuthenticationController(),
         permanent: true);
 
-    Get.lazyPut(() => OAYSOfferNearMeScreenController());
+    // Get.lazyPut(() => OAYSOfferNearMeScreenController());
   }
 }

@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
+import 'package:oaysflutter/screens/oays_home_screen.dart';
+import 'package:oaysflutter/screens/oays_offer_add_screen.dart';
 import 'package:oaysflutter/screens/oays_offer_near_me_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
@@ -144,6 +146,7 @@ class OAYSOfferAddScreenController extends GetxController {
         if (status == 'Success') {
           clearScreen();
           _showMessage('Offer Added Successfully.');
+          Get.offAll(() => OAYSHomeScreen());
         } else {
           clearScreen();
           _showMessage(status);
@@ -158,7 +161,7 @@ class OAYSOfferAddScreenController extends GetxController {
 
   Future<void> cancelProduct() async {
     clearScreen();
-    Get.off(() => OAYSOfferNearMeScreen());
+    Get.offAll(() => OAYSHomeScreen());
   }
 
   void clearScreen() {
@@ -185,5 +188,21 @@ class OAYSOfferAddScreenController extends GetxController {
       colorText: oaysFontColor,
       backgroundColor: boxFillColor,
     );
+  }
+
+  doDiscountPercentageCalc() {
+    if (offerProductActualPriceController.text.isEmpty ||
+        offerProductDiscountPriceController.text.isEmpty) {
+      _showMessage('Actual price or Discount price is missing');
+    } else if (int.parse(offerProductDiscountPriceController.text) >
+        int.parse(offerProductActualPriceController.text)) {
+      offerProductDiscountPercentController.text = '0.0';
+      _showMessage('Discount price should be less than lower price');
+    } else {
+      int actPrice = int.parse(offerProductActualPriceController.text);
+      int discPrice = int.parse(offerProductDiscountPriceController.text);
+      double discPerc = ((actPrice - discPrice) / actPrice) * 100;
+      offerProductDiscountPercentController.text = discPerc.toString();
+    }
   }
 }

@@ -23,6 +23,7 @@ class OAYSHomeScreenDrawerController extends GetxController {
     // setSelectedMenuIndex(selectedIndex.value);
     Get.put(OAYSOfferNearMeScreenController());
     print('object');
+    print(selectedIndex.value);
   }
 
   final screens = [

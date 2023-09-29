@@ -47,21 +47,35 @@ class OAYSMerchantModifyOfferScreen extends StatelessWidget {
                               updateController.pickProductImageFromGallery(),
                           child: Obx(
                             () => updateController.productImagePath.value == ''
-                                ? Image.asset(defaultUpdateImagePath,
-                                    height: 200, width: 200, fit: BoxFit.fill)
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    child: Image.asset(defaultUpdateImagePath,
+                                        height: 200,
+                                        width: 200,
+                                        fit: BoxFit.fill),
+                                  )
                                 : updateController.isProductNewImage.value
-                                    ? Image.file(
-                                        File(updateController
-                                            .productImagePath.value),
-                                        height: 200,
-                                        width: 200,
-                                        fit: BoxFit.fill,
+                                    ? ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        child: Image.file(
+                                          File(updateController
+                                              .productImagePath.value),
+                                          height: 200,
+                                          width: 200,
+                                          fit: BoxFit.fill,
+                                        ),
                                       )
-                                    : Image.network(
-                                        updateController.productImagePath.value,
-                                        height: 200,
-                                        width: 200,
-                                        fit: BoxFit.fill,
+                                    : ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        child: Image.network(
+                                          updateController
+                                              .productImagePath.value,
+                                          height: 200,
+                                          width: 200,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                           ),
                         ),

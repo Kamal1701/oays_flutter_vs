@@ -3,7 +3,7 @@ import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/screens/oays_offer_product_detail_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 
-class OAYSOfferNearMeScreenController extends GetxController {
+class OAYSAllOffersScreenController extends GetxController {
   final RxList<OAYSOfferProduct> _offerProductList = <OAYSOfferProduct>[].obs;
 
   List<OAYSOfferProduct> get offerProductList => _offerProductList;
@@ -17,9 +17,10 @@ class OAYSOfferNearMeScreenController extends GetxController {
   void onInit() async {
     super.onInit();
     // _offerProductList
-    //     .bindStream(OAYSDatabaseService().getOfferNearMeForUserByStream());
+    //     .bindStream(OAYSDatabaseService().getAllOffersForUserByStream());
     // isLoading.value = false;
-    await OAYSDatabaseService().getOfferNearMeForUserByLocation().then((value) {
+
+    await OAYSDatabaseService().getAllOffersForUserByAll().then((value) {
       offerProductList = value;
       isLoading.value = false;
     });

@@ -17,32 +17,34 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
     return Obx(
       () => productController.isLoading.value
           ? progressIndicator()
-          : Scaffold(
-              appBar: AppBar(
-                title: const Text(updateOffer),
-                backgroundColor: backgroundDarkColor,
-              ),
-              drawer: OAYSNavigationDrawer(),
-              body: Stack(
-                children: [
-                  productController.offerProductList.isNotEmpty
-                      ? Container(
-                          padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0),
-                          decoration: BoxDecoration(
-                            color: boxFillColor,
+          :
+          // Scaffold(
+          //     appBar: AppBar(
+          //       title: const Text(updateOffer),
+          //       backgroundColor: backgroundDarkColor,
+          //     ),
+          //     drawer: OAYSNavigationDrawer(),
+          //     body:
+          Stack(
+              children: [
+                productController.offerProductList.isNotEmpty
+                    ? Container(
+                        padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 0),
+                        decoration: BoxDecoration(
+                          color: boxFillColor,
+                        ),
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,
+                            // childAspectRatio: 2.35,
+                            mainAxisExtent: 180,
                           ),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              // childAspectRatio: 2.35,
-                              mainAxisExtent: 170,
-                            ),
-                            itemCount:
-                                productController.offerProductList.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
+                          itemCount: productController.offerProductList.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: SizedBox(
                                 child: InkWell(
                                   onTap: () {
                                     viewOfferController
@@ -61,7 +63,7 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                                             BorderRadius.circular(12)),
                                     child: Padding(
                                       padding:
-                                          const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                          const EdgeInsets.fromLTRB(3, 3, 3, 3),
                                       child: Column(
                                         children: [
                                           Row(
@@ -83,20 +85,30 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                                                                   index]
                                                               .isOfferImageBlank ==
                                                           true
-                                                      ? Image.asset(
-                                                          'assets/images/camera.png',
-                                                          height: 180,
-                                                          width: 180,
-                                                          fit: BoxFit.fill,
+                                                      ? ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                          child: Image.asset(
+                                                            'assets/images/camera.png',
+                                                            height: 180,
+                                                            width: 180,
+                                                            fit: BoxFit.fill,
+                                                          ),
                                                         )
-                                                      : Image.network(
-                                                          productController
-                                                              .offerProductList[
-                                                                  index]
-                                                              .offerImageUrl,
-                                                          height: 180,
-                                                          width: 180,
-                                                          fit: BoxFit.fill,
+                                                      : ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                          child: Image.network(
+                                                            productController
+                                                                .offerProductList[
+                                                                    index]
+                                                                .offerImageUrl,
+                                                            height: 180,
+                                                            width: 180,
+                                                            fit: BoxFit.fill,
+                                                          ),
                                                         ),
                                                 ),
                                               ),
@@ -251,62 +263,30 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        )
-                      : Container(
-                          // padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0),
-                          decoration: BoxDecoration(
-                            color: backgroundLightColor,
-                          ),
-                          child: Center(
-                            child: Text(
-                              "No products to view...",
-                              style: TextStyle(
-                                fontSize: 21,
-                                fontWeight: FontWeight.bold,
-                                color: oaysFontColor,
                               ),
+                            );
+                          },
+                        ),
+                      )
+                    : Container(
+                        // padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0),
+                        decoration: BoxDecoration(
+                          color: backgroundLightColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            "No products to view...",
+                            style: TextStyle(
+                              fontSize: 21,
+                              fontWeight: FontWeight.bold,
+                              color: oaysFontColor,
                             ),
                           ),
                         ),
-                  // productController.isLoading.value
-                  //     ? const Stack(
-                  //         children: [
-                  //           Opacity(
-                  //             opacity: 0.5,
-                  //             child: ModalBarrier(
-                  //               color: Colors.black,
-                  //               dismissible: false,
-                  //             ),
-                  //           ),
-                  //           Center(
-                  //             child: CircularProgressIndicator(),
-                  //           ),
-                  //         ],
-                  //       )
-                  //     : Container(),
-                ],
-              ),
+                      ),
+              ],
             ),
+      // ),
     );
   }
 }
-
-// Widget progressIndicator() {
-//   return const Stack(
-//     children: [
-//       Opacity(
-//         opacity: 0.5,
-//         child: ModalBarrier(
-//           color: Colors.black,
-//           dismissible: false,
-//         ),
-//       ),
-//       Center(
-//         child: CircularProgressIndicator(),
-//       ),
-//     ],
-//   );
-// }

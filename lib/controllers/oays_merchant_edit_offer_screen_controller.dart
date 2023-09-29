@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
+import 'package:oaysflutter/screens/oays_home_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_view_offer_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
@@ -105,7 +106,8 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
         await _deleteImageReference(oaysOfferProduct.offerImageUrl);
       }
       _showMessage('Offer Product deleted successfully');
-      Get.off(() => OAYSMerchantViewOfferScreen());
+      // Get.off(() => OAYSMerchantViewOfferScreen());
+      Get.offAll(() => OAYSHomeScreen());
     } else {
       _showMessage(status);
     }
@@ -218,7 +220,8 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
             userController.oaysUser.userId, oaysOfferProduct.offerProductId);
         if (status == 'Success') {
           _showMessage('Offer updated Successfully.');
-          Get.off(() => OAYSMerchantViewOfferScreen());
+          // Get.off(() => OAYSMerchantViewOfferScreen());
+          Get.offAll(() => OAYSHomeScreen());
         } else {
           _showMessage(status);
         }

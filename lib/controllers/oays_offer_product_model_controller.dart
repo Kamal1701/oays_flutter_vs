@@ -25,18 +25,12 @@ class OAYSOfferProductController extends GetxController {
   void onInit() async {
     super.onInit();
     String uid = Get.find<OAYSAuthenticationController>().user!.uid;
-    // setOfferProductList(await OAYSDatabaseService().getOfferProductStream(uid));
-    // await OAYSDatabaseService().getOfferProductNonStream(uid).then((value) {
-    //   offerProductList = value;
-    //   isLoading.value = false;
-    // });
-
     _offerProductList.bindStream(
         OAYSDatabaseService().getOfferProductStreamByUserIdForMerchant(uid));
-    isLoading.value = false; //stream coming from firebase
+    isLoading.value = false;
   }
 
-  void setOfferProductList(List<OAYSOfferProduct> productList) {
-    offerProductList.assignAll(productList);
-  }
+  // void setOfferProductList(List<OAYSOfferProduct> productList) {
+  //   offerProductList.assignAll(productList);
+  // }
 }

@@ -153,57 +153,37 @@ class OAYSDatabaseService {
     });
   }
 
-  // Stream<List<OAYSOfferProduct>> getOfferProductStreamByNearForUser2() {
-  //   return _db
-  //       .collection(productDetail)
-  //       .doc()
-  //       .collection(offerProductDetail)
-  //       .orderBy("updatedDate", descending: true)
-  //       .snapshots()
-  //       .map((QuerySnapshot query) {
-  //     List<OAYSOfferProduct> offerProduct = [];
-  //     for (var element in query.docs) {
-  //       offerProduct.add(OAYSOfferProduct.fromDocumentSnapshot(
-  //           element as DocumentSnapshot<Map<String, dynamic>>));
+  // Future<void> getOfferProductStreamByNearForUser3() async {
+  //   final Stream<QuerySnapshot<Map<String, dynamic>>> parentStream =
+  //       _db.collection(productDetail).snapshots();
+
+  //   // final List<DocumentSnapshot<Map<String, dynamic>>> subcollectionDocuments =
+  //   //     [];
+  //   List<OAYSOfferProduct> offerProduct = [];
+
+  //   parentStream.listen((QuerySnapshot<Map<String, dynamic>> snapshot) {
+  //     for (final DocumentSnapshot<Map<String, dynamic>> document
+  //         in snapshot.docs) {
+  //       final Stream<QuerySnapshot<Map<String, dynamic>>> subcollectionStream =
+  //           document.reference.collection(offerProductDetail).snapshots();
+
+  //       subcollectionStream.listen(
+  //           (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
+  //         for (final DocumentSnapshot<
+  //                 Map<String, dynamic>> subcollectionDocument
+  //             in subcollectionSnapshot.docs) {
+  //           // subcollectionDocuments.add(subcollectionDocument);
+  //           offerProduct.add(
+  //               OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
+  //         }
+  //         // print('getOfferProductStreamByNearForUser3');
+  //         // print(offerProduct.first.isOfferImageBlank);
+  //       });
   //     }
-  //     print(offerProduct);
-  //     return offerProduct;
   //   });
   // }
 
-  Future<void> getOfferProductStreamByNearForUser3() async {
-    final Stream<QuerySnapshot<Map<String, dynamic>>> parentStream =
-        _db.collection(productDetail).snapshots();
-
-    // final List<DocumentSnapshot<Map<String, dynamic>>> subcollectionDocuments =
-    //     [];
-    List<OAYSOfferProduct> offerProduct = [];
-
-    parentStream.listen((QuerySnapshot<Map<String, dynamic>> snapshot) {
-      for (final DocumentSnapshot<Map<String, dynamic>> document
-          in snapshot.docs) {
-        final Stream<QuerySnapshot<Map<String, dynamic>>> subcollectionStream =
-            document.reference.collection(offerProductDetail).snapshots();
-
-        subcollectionStream.listen(
-            (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
-          for (final DocumentSnapshot<
-                  Map<String, dynamic>> subcollectionDocument
-              in subcollectionSnapshot.docs) {
-            // subcollectionDocuments.add(subcollectionDocument);
-            offerProduct.add(
-                OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
-          }
-          // print('getOfferProductStreamByNearForUser3');
-          // print(offerProduct.first.isOfferImageBlank);
-        });
-      }
-    });
-  }
-
-  Stream<List<OAYSOfferProduct>> getOfferProductStreamByNearForUser4() {
-    // List<OAYSOfferProduct> offerProduct = [];
-
+  Stream<List<OAYSOfferProduct>> getOfferNearMeForUserByStream() {
     return _db
         .collection(productDetail)
         .snapshots()
@@ -216,7 +196,6 @@ class OAYSDatabaseService {
           for (final DocumentSnapshot<
                   Map<String, dynamic>> subcollectionDocument
               in subcollectionSnapshot.docs) {
-            // subcollectionDocuments.add(subcollectionDocument);
             offerProduct.add(
                 OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
           }
@@ -226,7 +205,29 @@ class OAYSDatabaseService {
     });
   }
 
-  Future<List<OAYSOfferProduct>> getOfferProductStreamByNearForUser() async {
+  // Stream<List<OAYSOfferProduct>> getAllOffersForUserByStream() {
+  //   return _db
+  //       .collection(productDetail)
+  //       .snapshots()
+  //       .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
+  //     List<OAYSOfferProduct> offerProduct = [];
+  //     for (final DocumentSnapshot<Map<String, dynamic>> document
+  //         in snapshot.docs) {
+  //       document.reference.collection(offerProductDetail).snapshots().listen(
+  //           (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
+  //         for (final DocumentSnapshot<
+  //                 Map<String, dynamic>> subcollectionDocument
+  //             in subcollectionSnapshot.docs) {
+  //           offerProduct.add(
+  //               OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
+  //         }
+  //       });
+  //     }
+  //     return offerProduct;
+  //   });
+  // }
+
+  Future<List<OAYSOfferProduct>> getOfferNearMeForUserByLocation() async {
     final CollectionReference collection = _db.collection(productDetail);
     List<OAYSOfferProduct> offerProduct = [];
 
@@ -235,7 +236,30 @@ class OAYSDatabaseService {
       final CollectionReference subcollection =
           document.reference.collection(offerProductDetail);
       final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
-          await subcollection.get() as QuerySnapshot<Map<String, dynamic>>;
+          await subcollection.orderBy("updatedDate", descending: true).get()
+              as QuerySnapshot<Map<String, dynamic>>;
+
+      for (final QueryDocumentSnapshot subcollectionDocument
+          in subcollectionQuerySnapshot.docs) {
+        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshot(
+            subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
+      }
+    }
+
+    return offerProduct;
+  }
+
+  Future<List<OAYSOfferProduct>> getAllOffersForUserByAll() async {
+    final CollectionReference collection = _db.collection(productDetail);
+    List<OAYSOfferProduct> offerProduct = [];
+
+    for (final QueryDocumentSnapshot document
+        in await collection.get().then((value) => value.docs)) {
+      final CollectionReference subcollection =
+          document.reference.collection(offerProductDetail);
+      final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
+          await subcollection.orderBy("updatedDate", descending: true).get()
+              as QuerySnapshot<Map<String, dynamic>>;
 
       for (final QueryDocumentSnapshot subcollectionDocument
           in subcollectionQuerySnapshot.docs) {

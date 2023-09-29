@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_drawer_controller.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/global_variable.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
 
 class OAYSNavigationDrawer extends StatelessWidget {
@@ -92,24 +93,26 @@ class OAYSNavigationDrawer extends StatelessWidget {
   Widget oAYSMenuOption(int id, String title) {
     return Material(
       color: boxFillColor,
-      child: Obx(
-        () {
-          return ListTile(
-            leading: const Icon(Icons.person),
-            title: Text(
-              title,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            selected: drawerController.selectedIndex.value == id,
-            onTap: () {
-              drawerController.setSelectedMenuIndex(id);
-              // Get.back();
-            },
-          );
+      child:
+          // Obx(
+          //   () {
+          //     return
+          ListTile(
+        leading: const Icon(Icons.person),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        selected: navigateToScreenIndex == id,
+        onTap: () {
+          print(navigateToScreenIndex);
+          drawerController.setSelectedMenuIndex(id);
         },
+        // );
+        // },
       ),
     );
   }

@@ -123,10 +123,7 @@ class OAYSHomeScreen extends StatelessWidget {
             selected: drawerController.selectedIndex.value == id,
             // selected: navigateToScreenIndex == id,
             onTap: () {
-              // print(drawerController.selectedIndex.value);
-              // print(id);
               drawerController.onSelectedItem(id);
-              // Get.back();
             },
           );
         },

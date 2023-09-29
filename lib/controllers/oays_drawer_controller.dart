@@ -20,10 +20,7 @@ class OAYSHomeScreenDrawerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // setSelectedMenuIndex(selectedIndex.value);
     Get.put(OAYSOfferNearMeScreenController());
-    print('object');
-    print(selectedIndex.value);
   }
 
   final screens = [

@@ -14,8 +14,6 @@ class OAYSAuthenticationController extends GetxController {
   // @override
   onInit() {
     super.onInit();
-    // print(_mauth.currentUser!.uid);
-    // _mauth = FirebaseAuth.instance;
     _firebaseUser.bindStream(_mauth.authStateChanges());
   }
 
@@ -24,7 +22,6 @@ class OAYSAuthenticationController extends GetxController {
     required String password,
   }) async {
     try {
-      print(_mauth.currentUser!.uid);
       await _mauth.signInWithEmailAndPassword(
           email: emailId, password: password);
       return 'Success';

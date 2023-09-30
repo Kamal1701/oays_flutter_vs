@@ -71,15 +71,9 @@ class OAYSHomeScreenDrawerController extends GetxController {
     // navigateToScreenIndex = index;
     // Get.back();
     // switch (selectedIndex.value) {
-    print(navigateToScreenIndex);
-    print(selectedIndex.value);
     selectedIndex.value =
         navigateToScreenIndex != 0 ? navigateToScreenIndex : index;
     update();
-    print('after check navigate screen index');
-    print(navigateToScreenIndex);
-    print(selectedIndex.value);
-    print(screenTitle[selectedIndex.value]);
     switch (selectedIndex.value) {
       case 0:
         // Get.back();

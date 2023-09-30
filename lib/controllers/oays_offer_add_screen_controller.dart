@@ -163,7 +163,7 @@ class OAYSOfferAddScreenController extends GetxController {
 
   Future<void> cancelProduct() async {
     clearScreen();
-    navigateToScreenIndex = 3;
+    navigateToScreenIndex = 0;
     Get.offAll(() => OAYSHomeScreen());
   }
 

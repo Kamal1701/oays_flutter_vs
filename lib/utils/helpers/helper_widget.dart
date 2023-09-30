@@ -48,3 +48,28 @@ Widget noProductTextWidget() {
     ),
   );
 }
+
+void showAlertDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('OAYS'),
+        content: Text('Are you sure to delete this offer?'),
+        actions: [
+          TextButton(
+            child: const Text('Cancel'),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: Text('Confirm'),
+            onPressed: () {
+              // Proceed further
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}

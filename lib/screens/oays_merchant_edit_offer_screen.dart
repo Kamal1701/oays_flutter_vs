@@ -386,7 +386,8 @@ class OAYSMerchantModifyOfferScreen extends StatelessWidget {
                                     const EdgeInsets.fromLTRB(15, 0, 30, 0),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    updateController.deleteProduct();
+                                    showAlertDialog(context);
+                                    // updateController.deleteProduct();
                                   },
                                   child: const Text("Delete"),
                                 ),
@@ -425,5 +426,187 @@ class OAYSMerchantModifyOfferScreen extends StatelessWidget {
 
   _getFormattedDate(DateTime dateTime) {
     return DateFormat('dd-MM-yyyy').format(dateTime);
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.circular(12.0),
+          // ),
+          // elevation: 0.0,
+          // backgroundColor: backgroundLightColor,
+          child: Container(
+            height: 160,
+            // width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [backgroundLightColor, backgroundLightColor],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                addVerticalSpace(10.0),
+                Text(
+                  'OAYS',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: oaysFontColor,
+                    fontSize: 18,
+                  ),
+                ),
+                addVerticalSpace(15.0),
+                Text(
+                  'Are you sure to delete this offer?',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: oaysFontColor,
+                  ),
+                ),
+                addVerticalSpace(20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      flex: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            Get.back();
+                            updateController.cancelDialogBox();
+                          },
+                          focusNode: FocusNode(),
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: oaysFontColor,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            Get.back();
+                            updateController.deleteProduct();
+                          },
+                          child: Text(
+                            "Confirm",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: oaysFontColor,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          // title: Text(
+          //   'OAYS',
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.bold,
+          //     color: oaysFontColor,
+          //   ),
+          // ),
+          // backgroundColor: backgroundLightColor,
+          // content: Text(
+          //   'Are you sure to delete this offer?',
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.normal,
+          //     color: oaysFontColor,
+          //   ),
+          // ),
+          // actions: [
+          //   // TextButton(
+          //   //   focusNode: FocusNode(),
+          //   //   child: const Text(
+          //   //     'Cancel',
+          //   //     style: TextStyle(
+          //   //       fontSize: 18,
+          //   //       color: Colors.white,
+          //   //       fontWeight: FontWeight.normal,
+          //   //     ),
+          //   //   ),
+          //   //   onPressed: () => Navigator.pop(context),
+          //   // ),
+          //   // TextButton(
+          //   //   child: const Text('Confirm',
+          //   //       style: TextStyle(
+          //   //         fontSize: 18,
+          //   //         color: Colors.white,
+          //   //         fontWeight: FontWeight.normal,
+          //   //       )),
+          //   //   onPressed: () {
+          //   //     // Proceed further
+          //   //     Navigator.pop(context);
+          //   //   },
+          //   // ),
+          //   Row(
+          //     children: [
+          //       Expanded(
+          //         child: Padding(
+          //           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          //           child: ElevatedButton(
+          //             onPressed: () async {
+          //               Get.back();
+          //             },
+          //             child: Text(
+          //               "Cancel",
+          //               style: TextStyle(
+          //                 fontSize: 16,
+          //                 color: oaysFontColor,
+          //                 fontWeight: FontWeight.normal,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //       Expanded(
+          //         child: Padding(
+          //           padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          //           child: ElevatedButton(
+          //             onPressed: () async {
+          //               Get.back();
+          //             },
+          //             child: Text(
+          //               "Confirm",
+          //               style: TextStyle(
+          //                 fontSize: 16,
+          //                 color: oaysFontColor,
+          //                 fontWeight: FontWeight.normal,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   )
+          // ],
+        );
+      },
+    );
   }
 }

@@ -256,4 +256,10 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
       offerProductDiscountPercentController.text = discPerc.toString();
     }
   }
+
+  void cancelDialogBox() {
+    navigateToScreenIndex = 4;
+    // Get.off(() => OAYSMerchantViewOfferScreen());
+    Get.offAll(() => OAYSHomeScreen());
+  }
 }

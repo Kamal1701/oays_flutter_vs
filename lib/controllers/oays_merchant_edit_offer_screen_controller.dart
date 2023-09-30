@@ -11,6 +11,7 @@ import 'package:oaysflutter/screens/oays_home_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_view_offer_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/global_variable.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
 
 class OAYSMerchantModifyOfferScreenController extends GetxController {
@@ -106,6 +107,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
         await _deleteImageReference(oaysOfferProduct.offerImageUrl);
       }
       _showMessage('Offer Product deleted successfully');
+      navigateToScreenIndex = 4;
       // Get.off(() => OAYSMerchantViewOfferScreen());
       Get.offAll(() => OAYSHomeScreen());
     } else {
@@ -219,6 +221,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
         String? status = await OAYSDatabaseService().updateOfferProduct(op,
             userController.oaysUser.userId, oaysOfferProduct.offerProductId);
         if (status == 'Success') {
+          navigateToScreenIndex = 4;
           _showMessage('Offer updated Successfully.');
           // Get.off(() => OAYSMerchantViewOfferScreen());
           Get.offAll(() => OAYSHomeScreen());

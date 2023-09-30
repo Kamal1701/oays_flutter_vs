@@ -12,6 +12,7 @@ import 'package:oaysflutter/screens/oays_offer_add_screen.dart';
 import 'package:oaysflutter/screens/oays_offer_near_me_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/global_variable.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
 
 class OAYSOfferAddScreenController extends GetxController {
@@ -145,6 +146,7 @@ class OAYSOfferAddScreenController extends GetxController {
             .addOfferProduct(op, userController.oaysUser.userId, offerId);
         if (status == 'Success') {
           clearScreen();
+          navigateToScreenIndex = 3;
           _showMessage('Offer Added Successfully.');
           Get.offAll(() => OAYSHomeScreen());
         } else {
@@ -161,6 +163,7 @@ class OAYSOfferAddScreenController extends GetxController {
 
   Future<void> cancelProduct() async {
     clearScreen();
+    navigateToScreenIndex = 3;
     Get.offAll(() => OAYSHomeScreen());
   }
 

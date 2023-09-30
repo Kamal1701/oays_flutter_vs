@@ -45,17 +45,42 @@ class OAYSHomeScreenDrawerController extends GetxController {
   ];
 
   onSelectedItem(int index) {
-    selectedIndex.value = index;
+    // selectedIndex.value = index;
+    selectedIndex.value =
+        navigateToScreenIndex != 0 ? navigateToScreenIndex : index;
+    // navigateToScreenIndex = index;
     Get.back();
     update();
   }
 
+  // onSelectedItem() {
+  //   selectedIndex.value = navigateToScreenIndex;
+  //   // navigateToScreenIndex = index;
+  //   Get.back();
+  //   update();
+  // }
+
+  String getAppBarTitle() {
+    return screenTitle[selectedIndex.value = navigateToScreenIndex != 0
+        ? navigateToScreenIndex
+        : selectedIndex.value];
+  }
+
   setSelectedMenuIndex(int index) {
     // selectedIndex.value = index;
-    navigateToScreenIndex = index;
+    // navigateToScreenIndex = index;
     // Get.back();
     // switch (selectedIndex.value) {
-    switch (index) {
+    print(navigateToScreenIndex);
+    print(selectedIndex.value);
+    selectedIndex.value =
+        navigateToScreenIndex != 0 ? navigateToScreenIndex : index;
+    update();
+    print('after check navigate screen index');
+    print(navigateToScreenIndex);
+    print(selectedIndex.value);
+    print(screenTitle[selectedIndex.value]);
+    switch (selectedIndex.value) {
       case 0:
         // Get.back();
         // Get.offAll(() => OAYSOfferNearMeScreen());

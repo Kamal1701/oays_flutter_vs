@@ -18,8 +18,9 @@ class OAYSHomeScreen extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text(drawerController
-              .screenTitle[drawerController.selectedIndex.value]),
+          title: Text(drawerController.getAppBarTitle()),
+          // Text(drawerController
+          //     .screenTitle[drawerController.selectedIndex.value]),
           backgroundColor: backgroundDarkColor,
         ),
         drawer: Container(
@@ -67,6 +68,7 @@ class OAYSHomeScreen extends StatelessWidget {
         ),
         body: drawerController
             .setSelectedMenuIndex(drawerController.selectedIndex.value),
+        // body: drawerController.setSelectedMenuIndex(navigateToScreenIndex),
       ),
     );
   }
@@ -123,7 +125,10 @@ class OAYSHomeScreen extends StatelessWidget {
             selected: drawerController.selectedIndex.value == id,
             // selected: navigateToScreenIndex == id,
             onTap: () {
+              navigateToScreenIndex = id;
               drawerController.onSelectedItem(id);
+
+              // drawerController.onSelectedItem();
             },
           );
         },

@@ -4,6 +4,7 @@ import 'package:oaysflutter/controllers/oays_offer_product_detail_screen_control
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/string_constant.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSOfferProductDetailScreen extends StatelessWidget {
@@ -35,8 +36,6 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
             child: Container(
               alignment: Alignment.topLeft,
-              // decoration: BoxDecoration(
-              //     color: boxFillColor, borderRadius: BorderRadius.circular(12)),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                 child: Column(
@@ -115,7 +114,7 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                     decorationColor: Colors.red,
                                   ),
                                 ),
-                                addHorizontalSpace(30),
+                                addHorizontalSpace(15),
                                 Text(
                                   productDetailController.oaysOfferProduct
                                       .offerProductDiscountPrice,
@@ -125,7 +124,7 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                     color: oaysFontColor,
                                   ),
                                 ),
-                                addHorizontalSpace(30),
+                                addHorizontalSpace(15),
                                 Text(
                                   productDetailController.oaysOfferProduct
                                       .offerProductDiscountPerc,
@@ -212,7 +211,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                     ),
                     addVerticalSpace(10),
                     Text(
-                      userController.oaysUser.shopName,
+                      // userController.oaysUser.shopName,
+                      productDetailController.oaysOfferProduct.shopName,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -221,7 +221,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                     ),
                     addVerticalSpace(10),
                     Text(
-                      userController.oaysUser.shopStreetName,
+                      // userController.oaysUser.shopStreetName,
+                      productDetailController.oaysOfferProduct.shopStreetName,
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -229,7 +230,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                     ),
                     addVerticalSpace(10),
                     Text(
-                      userController.oaysUser.shopCity,
+                      // userController.oaysUser.shopCity,
+                      productDetailController.oaysOfferProduct.shopCity,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -238,7 +240,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                     ),
                     addVerticalSpace(10),
                     Text(
-                      userController.oaysUser.shopState,
+                      // userController.oaysUser.shopState,
+                      productDetailController.oaysOfferProduct.shopState,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -247,7 +250,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                     ),
                     addVerticalSpace(10),
                     Text(
-                      userController.oaysUser.shopPincode,
+                      // userController.oaysUser.shopPincode,
+                      productDetailController.oaysOfferProduct.shopPincode,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

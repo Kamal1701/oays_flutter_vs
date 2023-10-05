@@ -16,10 +16,6 @@ class OAYSAllOffersScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // _offerProductList
-    //     .bindStream(OAYSDatabaseService().getAllOffersForUserByStream());
-    // isLoading.value = false;
-
     await OAYSDatabaseService().getAllOffersForUserByAll().then((value) {
       offerProductList = value;
       isLoading.value = false;

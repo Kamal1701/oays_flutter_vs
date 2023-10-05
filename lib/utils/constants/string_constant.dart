@@ -22,3 +22,7 @@ const offerProductDetail = 'OfferProductDetail';
 
 //image path
 const offerProductImagePath = 'OfferProductImages';
+
+//rupee symbol
+const rupeeSymbol = '\u{20B9}';
+const percentSymbol = '%';

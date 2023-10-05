@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:oaysflutter/controllers/oays_offer_product_model_controller.dart';
+import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_user_model.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
+import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/global_variable.dart';
 
 class OAYSAuthenticationController extends GetxController {
   static OAYSAuthenticationController get instance => Get.find();
@@ -11,7 +15,7 @@ class OAYSAuthenticationController extends GetxController {
 
   User? get user => _firebaseUser.value;
 
-  // @override
+  @override
   onInit() {
     super.onInit();
     _firebaseUser.bindStream(_mauth.authStateChanges());
@@ -22,8 +26,10 @@ class OAYSAuthenticationController extends GetxController {
     required String password,
   }) async {
     try {
-      await _mauth.signInWithEmailAndPassword(
-          email: emailId, password: password);
+      await _mauth
+          .signInWithEmailAndPassword(email: emailId, password: password)
+          .whenComplete(
+              () => _firebaseUser.bindStream(_mauth.authStateChanges()));
       return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -121,6 +127,19 @@ class OAYSAuthenticationController extends GetxController {
   }
 
   void userSignOut() async {
-    _mauth.signOut();
+    try {
+      navigateToScreenIndex = 0;
+      Get.find<OAYSUserController>().clear();
+      _firebaseUser.value = null;
+      await _mauth.signOut();
+    } catch (e) {
+      Get.snackbar(
+        'Info',
+        'Unable to sign-out now',
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: oaysFontColor,
+        backgroundColor: boxFillColor,
+      );
+    }
   }
 }

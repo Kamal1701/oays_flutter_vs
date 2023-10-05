@@ -16,9 +16,6 @@ class OAYSOfferNearMeScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // _offerProductList
-    //     .bindStream(OAYSDatabaseService().getOfferNearMeForUserByStream());
-    // isLoading.value = false;
     await OAYSDatabaseService().getOfferNearMeForUserByLocation().then((value) {
       offerProductList = value;
       isLoading.value = false;

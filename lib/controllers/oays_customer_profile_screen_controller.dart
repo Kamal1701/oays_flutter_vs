@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 
 class OAYSCustomerProfileScreenController extends GetxController {
@@ -15,14 +16,16 @@ class OAYSCustomerProfileScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userController = Get.find<OAYSUserController>();
+    userController = Get.put(OAYSUserController());
 
     setUserProfile();
   }
 
   void setUserProfile() {
     custUserName.text = userController.oaysUser.userName;
-    // custEmailAddress.text = userController.oaysUser;
+    // print(Get.find<OAYSAuthenticationController>().user!.email!);
+    custEmailAddress.text =
+        Get.find<OAYSAuthenticationController>().user!.email!;
     custLocation.text = userController.oaysUser.userLocation;
   }
 }

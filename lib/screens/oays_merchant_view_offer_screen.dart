@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_merchant_view_offer_screen_controller.dart';
 import 'package:oaysflutter/controllers/oays_offer_product_model_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
-import 'package:oaysflutter/utils/constants/string_constant.dart';
-import 'package:oaysflutter/utils/helpers/drawer_widget.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSMerchantViewOfferScreen extends StatelessWidget {
   final productController = Get.put(OAYSOfferProductController());
   final viewOfferController = Get.put(OAYSMerchantViewOfferScreenController());
+
   OAYSMerchantViewOfferScreen({super.key});
 
   @override
@@ -17,15 +16,7 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
     return Obx(
       () => productController.isLoading.value
           ? progressIndicator()
-          :
-          // Scaffold(
-          //     appBar: AppBar(
-          //       title: const Text(updateOffer),
-          //       backgroundColor: backgroundDarkColor,
-          //     ),
-          //     drawer: OAYSNavigationDrawer(),
-          //     body:
-          Stack(
+          : Stack(
               children: [
                 productController.offerProductList.isNotEmpty
                     ? Container(
@@ -269,7 +260,6 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                         ),
                       )
                     : Container(
-                        // padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0),
                         decoration: BoxDecoration(
                           color: backgroundLightColor,
                         ),
@@ -286,7 +276,6 @@ class OAYSMerchantViewOfferScreen extends StatelessWidget {
                       ),
               ],
             ),
-      // ),
     );
   }
 }

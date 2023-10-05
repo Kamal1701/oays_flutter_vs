@@ -8,8 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/screens/oays_home_screen.dart';
-import 'package:oaysflutter/screens/oays_offer_add_screen.dart';
-import 'package:oaysflutter/screens/oays_offer_near_me_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
@@ -205,7 +203,8 @@ class OAYSOfferAddScreenController extends GetxController {
       int actPrice = int.parse(offerProductActualPriceController.text);
       int discPrice = int.parse(offerProductDiscountPriceController.text);
       double discPerc = ((actPrice - discPrice) / actPrice) * 100;
-      offerProductDiscountPercentController.text = discPerc.toString();
+      offerProductDiscountPercentController.text =
+          discPerc.toStringAsFixed(2).toString();
     }
   }
 }

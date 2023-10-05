@@ -20,15 +20,7 @@ class OAYSOfferAddScreen extends StatelessWidget {
     return Obx(
       () => addController.isAddProductSuccess.value
           ? progressIndicator()
-          :
-          // Scaffold(
-          //     appBar: AppBar(
-          //       title: const Text(addOfferProduct),
-          //       backgroundColor: backgroundDarkColor,
-          //     ),
-          //     drawer: OAYSNavigationDrawer(),
-          //     body:
-          Stack(
+          : Stack(
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height,
@@ -173,12 +165,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                                       color: oaysFontColor,
                                     ),
                                   ),
-                                  // OAYSCustomTextField(
-                                  //   controller: addController
-                                  //       .offerProductActualPriceController,
-                                  //   labelText: "Actual Price",
-                                  //   obscureText: false,
-                                  // ),
                                 ),
                               ),
                               Expanded(
@@ -208,12 +194,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                                       color: oaysFontColor,
                                     ),
                                   ),
-                                  // OAYSCustomTextField(
-                                  //   controller: addController
-                                  //       .offerProductDiscountPriceController,
-                                  //   labelText: "Discount Price",
-                                  //   obscureText: false,
-                                  // ),
                                 ),
                               ),
                             ],
@@ -338,12 +318,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                                       color: oaysFontColor,
                                     ),
                                   ),
-                                  // OAYSCustomTextField(
-                                  //   controller: addController
-                                  //       .offerProductDiscountPercentController,
-                                  //   labelText: "Discount %",
-                                  //   obscureText: false,
-                                  // ),
                                 ),
                               ),
                             ],
@@ -399,26 +373,6 @@ class OAYSOfferAddScreen extends StatelessWidget {
                 ),
               ],
             ),
-      // ),
-      // Obx(
-      //   () => addController.isProductSuccess.value
-      //       ? const Stack(
-      //           children: [
-      //             Opacity(
-      //               opacity: 0.5,
-      //               child: ModalBarrier(
-      //                 color: Colors.black,
-      //                 dismissible: false,
-      //               ),
-      //             ),
-      //             Center(
-      //               child: CircularProgressIndicator(),
-      //             ),
-      //           ],
-      //         )
-      //       : Container(),
-      // )
-      // ],
     );
   }
 

@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/screens/oays_home_screen.dart';
-import 'package:oaysflutter/screens/oays_merchant_view_offer_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
@@ -32,7 +31,6 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
 
   OAYSMerchantModifyOfferScreenController(this.oaysOfferProduct);
 
-  // var offerId = '';
   final offerProductNameController = TextEditingController();
   final offerProductBrandController = TextEditingController();
   final offerProductCategoryController = TextEditingController();
@@ -108,7 +106,6 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
       }
       _showMessage('Offer Product deleted successfully');
       navigateToScreenIndex = 4;
-      // Get.off(() => OAYSMerchantViewOfferScreen());
       Get.offAll(() => OAYSHomeScreen());
     } else {
       _showMessage(status);
@@ -141,14 +138,15 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
     offerProductSubCategoryController.text =
         offerProduct.offerProductSubcategory;
     offerProductActualPriceController.text =
-        offerProduct.offerProductActualPrice;
+        offerProduct.offerProductActualPrice.substring(1);
     offerProductDiscountPriceController.text =
-        offerProduct.offerProductDiscountPrice;
+        offerProduct.offerProductDiscountPrice.substring(1);
     offerProductStartDateController.text = offerProduct.offerProductStartDate;
     offerProductEndDateController.text = offerProduct.offerProductEndDate;
     offerProductWeightController.text = offerProduct.offerProductWeigh;
-    offerProductDiscountPercentController.text =
-        offerProduct.offerProductDiscountPerc;
+    offerProductDiscountPercentController.text = offerProduct
+        .offerProductDiscountPerc
+        .substring(0, offerProduct.offerProductDiscountPerc.length - 1);
     offerProductDescriptionController.text =
         offerProduct.offerProductDescription;
   }
@@ -223,7 +221,6 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
         if (status == 'Success') {
           navigateToScreenIndex = 4;
           _showMessage('Offer updated Successfully.');
-          // Get.off(() => OAYSMerchantViewOfferScreen());
           Get.offAll(() => OAYSHomeScreen());
         } else {
           _showMessage(status);
@@ -253,13 +250,13 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
       int actPrice = int.parse(offerProductActualPriceController.text);
       int discPrice = int.parse(offerProductDiscountPriceController.text);
       double discPerc = ((actPrice - discPrice) / actPrice) * 100;
-      offerProductDiscountPercentController.text = discPerc.toString();
+      offerProductDiscountPercentController.text =
+          discPerc.toStringAsFixed(2).toString();
     }
   }
 
   void cancelDialogBox() {
     navigateToScreenIndex = 4;
-    // Get.off(() => OAYSMerchantViewOfferScreen());
     Get.offAll(() => OAYSHomeScreen());
   }
 }

@@ -9,57 +9,59 @@ class OAYSTheme {
   Color txtFieldFillColor = txtFillColor;
 
   static ThemeData lightTheme = ThemeData(
-    useMaterial3: true,
-    colorScheme: const ColorScheme.dark()
-        .copyWith(primary: _themeClass.lightPrimaryColor),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        // minimumSize: MaterialStateProperty.all(
-        //   const Size(double.infinity, 55),
-        // ),
-        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-          (states) => _themeClass.bgDarkColor,
-        ),
-        shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
-          (_) {
-            return RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            );
-          },
-        ),
-        textStyle:
-            MaterialStateProperty.resolveWith((states) => const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.black,
-                )),
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      fillColor: _themeClass.txtFieldFillColor,
-      filled: true,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(8.0),
-        ),
-        borderSide: BorderSide(
-          color: _themeClass.txtFieldBorderColor,
+      useMaterial3: true,
+      colorScheme: const ColorScheme.dark()
+          .copyWith(primary: _themeClass.lightPrimaryColor),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          // minimumSize: MaterialStateProperty.all(
+          //   const Size(double.infinity, 55),
+          // ),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (states) => _themeClass.bgDarkColor,
+          ),
+          shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+            (_) {
+              return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              );
+            },
+          ),
+          textStyle:
+              MaterialStateProperty.resolveWith((states) => const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.black,
+                  )),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
         ),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(8.0),
+      inputDecorationTheme: InputDecorationTheme(
+        fillColor: _themeClass.txtFieldFillColor,
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8.0),
+          ),
+          borderSide: BorderSide(
+            color: _themeClass.txtFieldBorderColor,
+          ),
         ),
-        borderSide: BorderSide(
-          color: _themeClass.txtFieldBorderColor,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8.0),
+          ),
+          borderSide: BorderSide(
+            color: _themeClass.txtFieldBorderColor,
+          ),
+        ),
+        hintStyle: TextStyle(
+          color: hintTextColor,
         ),
       ),
-      hintStyle: TextStyle(
-        color: hintTextColor,
-      ),
-    ),
-  );
+      popupMenuTheme: PopupMenuThemeData(
+        color: backgroundLightColor,
+      ));
 }
 
 OAYSTheme _themeClass = OAYSTheme();

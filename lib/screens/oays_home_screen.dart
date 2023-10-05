@@ -1,75 +1,164 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_drawer_controller.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
+import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSHomeScreen extends StatelessWidget {
   final drawerController = Get.put(OAYSHomeScreenDrawerController());
   final userController = Get.put(OAYSUserController());
+
   OAYSHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        appBar: AppBar(
-          title: Text(drawerController.getAppBarTitle()),
-          // Text(drawerController
-          //     .screenTitle[drawerController.selectedIndex.value]),
-          backgroundColor: backgroundDarkColor,
-        ),
-        drawer: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          child: Drawer(
-            elevation: 0,
-            backgroundColor: boxFillColor,
-            width: 250,
-            child: ListView(
-              children: [
-                GetBuilder<OAYSUserController>(
-                  builder: (controller) {
-                    return DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: backgroundDarkColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                userController.oaysUser.userName,
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                userController.oaysUser.userLocation,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+      () => WillPopScope(
+        onWillPop: () async {
+          // Show a dialog to confirm with the user
+          return await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              backgroundColor: backgroundLightColor,
+              title: Text(
+                'OAYS Info',
+                style: TextStyle(
+                  color: oaysFontColor,
                 ),
-                oAYSDrawerList(),
+              ),
+              content: Text(
+                'Do you want to exit now?',
+                style: TextStyle(
+                  color: oaysFontColor,
+                  fontSize: 18,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: Text(
+                    'No',
+                    style: TextStyle(
+                      color: oaysFontColor,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => SystemNavigator.pop(),
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: oaysFontColor),
+                  ),
+                ),
               ],
             ),
+          );
+
+          // If the user confirms, pop the current screen
+          // SystemNavigator.pop();
+          // return false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(drawerController.getAppBarTitle()),
+            backgroundColor: backgroundDarkColor,
+            actions: [
+              popUpOAYSMenuItem(),
+            ],
           ),
+          drawer: Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: Drawer(
+              elevation: 0,
+              backgroundColor: boxFillColor,
+              width: 250,
+              child: ListView(
+                children: [
+                  GetBuilder<OAYSUserController>(
+                    builder: (controller) {
+                      return DrawerHeader(
+                        decoration: BoxDecoration(
+                          color: backgroundDarkColor,
+                        ),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  userController.oaysUser.userName,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  userController.oaysUser.userLocation,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  oAYSDrawerList(),
+                ],
+              ),
+            ),
+          ),
+          body: drawerController
+              .setSelectedMenuIndex(drawerController.selectedIndex.value),
         ),
-        body: drawerController
-            .setSelectedMenuIndex(drawerController.selectedIndex.value),
-        // body: drawerController.setSelectedMenuIndex(navigateToScreenIndex),
       ),
+    );
+  }
+
+  Widget popUpOAYSMenuItem() {
+    return PopupMenuButton(
+      onSelected: (value) {
+        drawerController.onPopupMenuItemSection(value);
+      },
+      offset: Offset(0.0, AppBar().preferredSize.height),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+            value: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.person,
+                  color: Colors.black,
+                ),
+                addHorizontalSpace(10.0),
+                Text(
+                  'Profile',
+                  style: TextStyle(color: oaysFontColor),
+                ),
+              ],
+            )),
+        PopupMenuItem(
+            value: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(Icons.logout, color: Colors.black),
+                addHorizontalSpace(10.0),
+                Text(
+                  'Logout',
+                  style: TextStyle(color: oaysFontColor),
+                ),
+              ],
+            )),
+      ],
     );
   }
 
@@ -88,10 +177,10 @@ class OAYSHomeScreen extends StatelessWidget {
               1,
               allOffers,
             ),
-            oAYSMenuOption(
-              2,
-              profile,
-            ),
+            // oAYSMenuOption(
+            //   2,
+            //   profile,
+            // ),
             if (userController.oaysUser.isMerchant)
               oAYSMenuOption(
                 3,
@@ -123,12 +212,9 @@ class OAYSHomeScreen extends StatelessWidget {
               ),
             ),
             selected: drawerController.selectedIndex.value == id,
-            // selected: navigateToScreenIndex == id,
             onTap: () {
               navigateToScreenIndex = id;
               drawerController.onSelectedItem(id);
-
-              // drawerController.onSelectedItem();
             },
           );
         },

@@ -135,7 +135,30 @@ class OAYSDatabaseService {
     }
   }
 
-  Stream<List<OAYSOfferProduct>> getOfferProductStreamByUserIdForMerchant(
+  Future<List<OAYSOfferProduct>> getOfferProductStreamByUserIdForMerchant(
+      String uid) async {
+    final DocumentReference collection = _db.collection(productDetail).doc(uid);
+    List<OAYSOfferProduct> offerProduct = [];
+
+    // for (final QueryDocumentSnapshot document
+    //     in await collection.get().then((value) => value.docs)) {
+    final CollectionReference subcollection =
+        collection.collection(offerProductDetail);
+    final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
+        await subcollection.orderBy("updatedDate", descending: true).get()
+            as QuerySnapshot<Map<String, dynamic>>;
+
+    for (final QueryDocumentSnapshot subcollectionDocument
+        in subcollectionQuerySnapshot.docs) {
+      offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
+          subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
+    }
+    // }
+
+    return offerProduct;
+  }
+
+  Stream<List<OAYSOfferProduct>> getOfferProductStreamByUserIdForMerchant2(
       String uid) {
     return _db
         .collection(productDetail)
@@ -146,7 +169,7 @@ class OAYSDatabaseService {
         .map((QuerySnapshot query) {
       List<OAYSOfferProduct> offerProduct = [];
       for (var element in query.docs) {
-        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshot(
+        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
             element as DocumentSnapshot<Map<String, dynamic>>));
       }
       return offerProduct;
@@ -241,7 +264,7 @@ class OAYSDatabaseService {
 
       for (final QueryDocumentSnapshot subcollectionDocument
           in subcollectionQuerySnapshot.docs) {
-        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshot(
+        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
             subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
       }
     }
@@ -263,7 +286,7 @@ class OAYSDatabaseService {
 
       for (final QueryDocumentSnapshot subcollectionDocument
           in subcollectionQuerySnapshot.docs) {
-        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshot(
+        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
             subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
       }
     }

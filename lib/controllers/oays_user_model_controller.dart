@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/models/oays_user_model.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
+import 'package:oaysflutter/utils/constants/global_variable.dart';
 
 class OAYSUserController extends GetxController {
   final _oaysUser = OAYSUser('', '', '', false, '', '', '', '', '').obs;
@@ -13,8 +14,10 @@ class OAYSUserController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    oaysUser = await OAYSDatabaseService()
-        .getCustomer(Get.find<OAYSAuthenticationController>().user!.uid);
+    if (!isUserLogout) {
+      oaysUser = await OAYSDatabaseService()
+          .getCustomer(Get.find<OAYSAuthenticationController>().user!.uid);
+    }
   }
 
   void clear() {

@@ -4,7 +4,6 @@ import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/screens/oays_customer_signup_screen.dart';
 import 'package:oaysflutter/screens/oays_home_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_signup_screen.dart';
-import 'package:oaysflutter/screens/oays_offer_near_me_screen.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 
 class OAYSSignInScreenController extends GetxController {
@@ -23,18 +22,25 @@ class OAYSSignInScreenController extends GetxController {
 
       String? error = await OAYSAuthenticationController.instance
           .oAYSCustomerLoginService(
-            emailId: emailAddress.text.trim(),
-            password: password.text.trim(),
-          )
-          .whenComplete(() => isLoginSuccess.value = false);
+        emailId: emailAddress.text.trim(),
+        password: password.text.trim(),
+      )
+          .whenComplete(() {
+        isLoginSuccess.value = false;
+        clearScreen();
+      });
       if (error != 'Success') {
         _showMessage(error.toString());
       } else {
         _showMessage('Logged-in successfully');
-        // Get.to(() => OAYSOfferNearMeScreen());
         Get.to(() => OAYSHomeScreen());
       }
     }
+  }
+
+  clearScreen() {
+    emailAddress.text = '';
+    password.text = '';
   }
 
   oaysCustomerSignUp() {

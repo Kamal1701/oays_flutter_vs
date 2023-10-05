@@ -8,7 +8,6 @@ import 'package:oaysflutter/components/oays_textfield.dart';
 import 'package:oaysflutter/controllers/oays_offer_add_screen_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
-import 'package:oaysflutter/utils/helpers/drawer_widget.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSOfferAddScreen extends StatelessWidget {

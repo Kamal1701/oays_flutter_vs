@@ -15,7 +15,7 @@ class OAYSCustomerSignUpController extends GetxController {
 
   final isRegisterSuccess = false.obs;
 
-  createCustomerProfile() async {
+  void createCustomerProfile() async {
     if (custUserName.text.isEmpty) {
       _showMessage('Please enter your user name');
     } else if (custEmailAddress.text.isEmpty) {

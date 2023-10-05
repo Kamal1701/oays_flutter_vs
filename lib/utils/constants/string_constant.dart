@@ -7,6 +7,7 @@ const isMerchant = true;
 const offerNearMe = 'Offer Near Me';
 const allOffers = 'All Offers';
 const profile = 'Profile';
+const profileMerchant = 'Profile';
 const addOfferProduct = 'Add Offers';
 const updateOffer = 'Update Offer';
 const modifyOffer = 'Modify Offer';

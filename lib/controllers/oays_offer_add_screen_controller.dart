@@ -45,7 +45,7 @@ class OAYSOfferAddScreenController extends GetxController {
     userController = Get.find<OAYSUserController>();
   }
 
-  pickProductImageFromGallery() async {
+  void pickProductImageFromGallery() async {
     if (isGestureTapDisabled.value && isNoProductImage.value) {
       _showMessage('To add image, please uncheck no product image.');
     } else {
@@ -56,7 +56,7 @@ class OAYSOfferAddScreenController extends GetxController {
     }
   }
 
-  onClickNoProductImageCheckbox(bool? isChecked) {
+  void onClickNoProductImageCheckbox(bool? isChecked) {
     isNoProductImage.value = isChecked!;
     if (isNoProductImage.value) {
       productImagePath.value = '';
@@ -181,7 +181,7 @@ class OAYSOfferAddScreenController extends GetxController {
     offerProductDescriptionController.text = '';
   }
 
-  _showMessage(String info) {
+  void _showMessage(String info) {
     Get.snackbar(
       'Info',
       info,
@@ -191,7 +191,7 @@ class OAYSOfferAddScreenController extends GetxController {
     );
   }
 
-  doDiscountPercentageCalc() {
+  void doDiscountPercentageCalc() {
     if (offerProductActualPriceController.text.isEmpty ||
         offerProductDiscountPriceController.text.isEmpty) {
       _showMessage('Actual price or Discount price is missing');

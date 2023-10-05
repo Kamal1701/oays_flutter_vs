@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oaysflutter/components/oays_signin_button.dart';
-import 'package:oaysflutter/components/oays_textfield.dart';
 import 'package:oaysflutter/controllers/oays_customer_profile_screen_controller.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
-import 'package:oaysflutter/utils/constants/string_constant.dart';
-import 'package:oaysflutter/utils/helpers/drawer_widget.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSCustomerProfileScreen extends StatelessWidget {

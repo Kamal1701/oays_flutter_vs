@@ -23,7 +23,6 @@ class OAYSCustomerProfileScreenController extends GetxController {
 
   void setUserProfile() {
     custUserName.text = userController.oaysUser.userName;
-    // print(Get.find<OAYSAuthenticationController>().user!.email!);
     custEmailAddress.text =
         Get.find<OAYSAuthenticationController>().user!.email!;
     custLocation.text = userController.oaysUser.userLocation;

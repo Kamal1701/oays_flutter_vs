@@ -12,7 +12,7 @@ class OAYSSignInScreenController extends GetxController {
   final password = TextEditingController();
   final isLoginSuccess = false.obs;
 
-  oaysUserSignin() async {
+  void oaysUserSignin() async {
     if (emailAddress.text.isEmpty) {
       _showMessage('Please enter your email address');
     } else if (password.text.isEmpty) {
@@ -38,20 +38,20 @@ class OAYSSignInScreenController extends GetxController {
     }
   }
 
-  clearScreen() {
+  void clearScreen() {
     emailAddress.text = '';
     password.text = '';
   }
 
-  oaysCustomerSignUp() {
+  void oaysCustomerSignUp() {
     Get.to(() => OAYSCustomerSignUpScreen());
   }
 
-  oaysMerchantSignUp() {
+  void oaysMerchantSignUp() {
     Get.to(() => OAYSMerchantSignUpScreen());
   }
 
-  _showMessage(String info) {
+  void _showMessage(String info) {
     Get.snackbar(
       'Info',
       info,

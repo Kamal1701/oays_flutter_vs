@@ -52,7 +52,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
     getOfferProduct(oaysOfferProduct);
   }
 
-  pickProductImageFromGallery() async {
+  void pickProductImageFromGallery() async {
     if (isGestureTapDisabled.value && isNoProductImage.value) {
       _showMessage('To add image, please uncheck no product image.');
     } else {
@@ -73,7 +73,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
     }
   }
 
-  onClickNoProductImageCheckbox(bool? isChecked) {
+  void onClickNoProductImageCheckbox(bool? isChecked) {
     isNoProductImage.value = isChecked!;
     if (isNoProductImage.value) {
       productImagePath.value = '';
@@ -238,7 +238,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
     await storageReference.delete();
   }
 
-  doDiscountPercentageCalc() {
+  void doDiscountPercentageCalc() {
     if (offerProductActualPriceController.text.isEmpty ||
         offerProductDiscountPriceController.text.isEmpty) {
       _showMessage('Actual price or Discount price is missing');

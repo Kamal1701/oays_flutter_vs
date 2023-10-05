@@ -1,9 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/controllers/oays_offer_near_me_screen_controller.dart';
 import 'package:oaysflutter/screens/oays_all_offers_screen.dart';
 import 'package:oaysflutter/screens/oays_customer_profile_screen.dart';
-import 'package:oaysflutter/screens/oays_home_screen.dart';
+import 'package:oaysflutter/screens/oays_merchant_profile_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_view_offer_screen.dart';
 import 'package:oaysflutter/screens/oays_offer_add_screen.dart';
 import 'package:oaysflutter/screens/oays_offer_near_me_screen.dart';
@@ -32,21 +33,22 @@ class OAYSHomeScreenDrawerController extends GetxController {
     allOffers,
     profile,
     addOfferProduct,
-    updateOffer
+    updateOffer,
+    profileMerchant,
   ];
 
-  onSelectedItem(int index) {
+  void onSelectedItem(int index) {
     selectedIndex.value =
         navigateToScreenIndex != 0 ? navigateToScreenIndex : index;
     Get.back();
     update();
   }
 
-  onPopupMenuItemSection(int index) {
+  void onPopupMenuItemSection(int index, bool isMerchant) {
     popUpMenuIndex.value = index;
     switch (popUpMenuIndex.value) {
       case 0:
-        navigateToScreenIndex = 2;
+        navigateToScreenIndex = isMerchant ? 5 : 2;
         setSelectedMenuIndex(index);
         break;
       // Get.offAll(() => OAYSHomeScreen());
@@ -87,6 +89,8 @@ class OAYSHomeScreenDrawerController extends GetxController {
         return isUserLogout
             ? OAYSSignInScreen()
             : OAYSMerchantViewOfferScreen();
+      case 5:
+        return OAYSMerchantProfileScreen();
       default:
         break;
     }

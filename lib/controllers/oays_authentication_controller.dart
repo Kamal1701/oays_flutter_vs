@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:oaysflutter/controllers/oays_offer_product_model_controller.dart';
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_user_model.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';
@@ -11,7 +10,8 @@ class OAYSAuthenticationController extends GetxController {
   static OAYSAuthenticationController get instance => Get.find();
   final _mauth = FirebaseAuth.instance;
   // late FirebaseAuth _mauth;
-  Rx<User?> _firebaseUser = Rx<User?>(null);
+  // Rx<User?> _firebaseUser = Rx<User?>(null);
+  final _firebaseUser = Rx<User?>(null);
 
   User? get user => _firebaseUser.value;
 

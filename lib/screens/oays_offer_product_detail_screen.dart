@@ -4,7 +4,6 @@ import 'package:oaysflutter/controllers/oays_offer_product_detail_screen_control
 import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
-import 'package:oaysflutter/utils/constants/string_constant.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSOfferProductDetailScreen extends StatelessWidget {

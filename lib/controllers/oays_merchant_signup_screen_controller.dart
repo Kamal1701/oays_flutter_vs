@@ -20,7 +20,7 @@ class OAYSMerchantSignUpController extends GetxController {
 
   final isRegisterSuccess = false.obs;
 
-  createMerchantProfile() async {
+  void createMerchantProfile() async {
     if (merchantUserName.text.isEmpty) {
       _showMessage('Please enter your user name');
     } else if (merchantEmailAddress.text.isEmpty) {
@@ -66,7 +66,7 @@ class OAYSMerchantSignUpController extends GetxController {
     }
   }
 
-  _showMessage(String info) {
+  void _showMessage(String info) {
     Get.snackbar(
       'Info',
       info,
@@ -76,7 +76,7 @@ class OAYSMerchantSignUpController extends GetxController {
     );
   }
 
-  _clearScreen() {
+  void _clearScreen() {
     merchantEmailAddress.text = '';
     merchantPassword.text = '';
     merchantUserName.text = '';

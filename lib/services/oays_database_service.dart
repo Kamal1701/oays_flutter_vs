@@ -35,6 +35,54 @@ class OAYSDatabaseService {
     }
   }
 
+  Future<String> updateOAYSCustomer(String uId, String location) async {
+    try {
+      // String? status;
+      Map<String, dynamic> locationUpdate = {
+        'userLocation': location,
+        'updatedDate': FieldValue.serverTimestamp()
+      };
+      CollectionReference collectRef = _db.collection(customerProfile);
+      await collectRef.doc(uId).update(locationUpdate);
+      // .whenComplete(() {
+      //   status = 'Success';
+      // });
+
+      return 'Success';
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Error in update customer location';
+    }
+  }
+
+  Future<String> updateOAYSMerchant(String uId, String location, String sName,
+      String sStreetName, String sCity, String sState, String sPincode) async {
+    try {
+      // String? status;
+      Map<String, dynamic> locationUpdate = {
+        'userLocation': location,
+        'shopName': sName,
+        'shopStreetName': sStreetName,
+        'shopCity': sCity,
+        'shopState': sState,
+        'shopPincode': sPincode,
+        'updatedDate': FieldValue.serverTimestamp()
+      };
+      CollectionReference collectRef = _db.collection(customerProfile);
+      await collectRef.doc(uId).update(locationUpdate);
+      // .whenComplete(() {
+      //   status = 'Success';
+      // });
+
+      return 'Success';
+    } on FirebaseException catch (e) {
+      return e.message.toString();
+    } catch (e) {
+      return 'Error in add customer';
+    }
+  }
+
   Future<String?> addOAYSMerchant(OAYSUser user) async {
     try {
       String? status;

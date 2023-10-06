@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/controllers/oays_offer_near_me_screen_controller.dart';
@@ -16,7 +15,7 @@ class OAYSHomeScreenDrawerController extends GetxController {
   static OAYSHomeScreenDrawerController get instance => Get.find();
 
   var pageTitle = offerNearMe.obs;
-  var container;
+  late var container;
 
   final selectedIndex = 0.obs;
   final popUpMenuIndex = 0.obs;
@@ -94,7 +93,7 @@ class OAYSHomeScreenDrawerController extends GetxController {
       default:
         break;
     }
-    update();
+    // update();
   }
 
   void oaysUserSignOut() {

@@ -97,11 +97,13 @@ class OAYSHomeScreen extends StatelessWidget {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
-                                  userController.oaysUser.userLocation,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.normal),
+                                Obx(
+                                  () => Text(
+                                    userController.oaysUser.userLocation,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal),
+                                  ),
                                 ),
                               ],
                             ),

@@ -5,7 +5,8 @@ import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
 
 class OAYSOfferProductController extends GetxController {
-  RxList<OAYSOfferProduct> _offerProductList = <OAYSOfferProduct>[].obs;
+  // RxList<OAYSOfferProduct> _offerProductList = <OAYSOfferProduct>[].obs;
+  final _offerProductList = <OAYSOfferProduct>[].obs;
 
   List<OAYSOfferProduct> get offerProductList => _offerProductList;
 

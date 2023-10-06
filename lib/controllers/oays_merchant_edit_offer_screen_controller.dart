@@ -48,8 +48,10 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userController = Get.find<OAYSUserController>();
-    getOfferProduct(oaysOfferProduct);
+    if (!isUserLogout) {
+      userController = Get.find<OAYSUserController>();
+      getOfferProduct(oaysOfferProduct);
+    }
   }
 
   void pickProductImageFromGallery() async {
@@ -242,13 +244,13 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
     if (offerProductActualPriceController.text.isEmpty ||
         offerProductDiscountPriceController.text.isEmpty) {
       _showMessage('Actual price or Discount price is missing');
-    } else if (int.parse(offerProductDiscountPriceController.text) >
-        int.parse(offerProductActualPriceController.text)) {
+    } else if (double.parse(offerProductDiscountPriceController.text) >
+        double.parse(offerProductActualPriceController.text)) {
       offerProductDiscountPercentController.text = '0.0';
       _showMessage('Discount price should be less than lower price');
     } else {
-      int actPrice = int.parse(offerProductActualPriceController.text);
-      int discPrice = int.parse(offerProductDiscountPriceController.text);
+      double actPrice = double.parse(offerProductActualPriceController.text);
+      double discPrice = double.parse(offerProductDiscountPriceController.text);
       double discPerc = ((actPrice - discPrice) / actPrice) * 100;
       offerProductDiscountPercentController.text =
           discPerc.toStringAsFixed(2).toString();

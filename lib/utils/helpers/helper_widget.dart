@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 
 Widget addVerticalSpace(double height) {
@@ -55,14 +56,14 @@ void showAlertDialog(BuildContext context) {
     builder: (context) {
       return AlertDialog(
         title: const Text('OAYS'),
-        content: Text('Are you sure to delete this offer?'),
+        content: const Text('Are you sure to delete this offer?'),
         actions: [
           TextButton(
             child: const Text('Cancel'),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('Confirm'),
+            child: const Text('Confirm'),
             onPressed: () {
               // Proceed further
               Navigator.pop(context);
@@ -71,5 +72,15 @@ void showAlertDialog(BuildContext context) {
         ],
       );
     },
+  );
+}
+
+void showMessage(String info) {
+  Get.snackbar(
+    'Info',
+    info,
+    snackPosition: SnackPosition.BOTTOM,
+    colorText: oaysFontColor,
+    backgroundColor: boxFillColor,
   );
 }

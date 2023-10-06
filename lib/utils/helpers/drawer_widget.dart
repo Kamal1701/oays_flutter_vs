@@ -108,7 +108,6 @@ class OAYSNavigationDrawer extends StatelessWidget {
         ),
         selected: navigateToScreenIndex == id,
         onTap: () {
-          print(navigateToScreenIndex);
           drawerController.setSelectedMenuIndex(id);
         },
         // );

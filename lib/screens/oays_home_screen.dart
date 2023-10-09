@@ -9,8 +9,8 @@ import 'package:oaysflutter/utils/constants/string_constant.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSHomeScreen extends StatelessWidget {
-  final drawerController = Get.put(OAYSHomeScreenDrawerController());
   final userController = Get.put(OAYSUserController());
+  final drawerController = Get.put(OAYSHomeScreenDrawerController());
 
   OAYSHomeScreen({super.key});
 
@@ -71,7 +71,7 @@ class OAYSHomeScreen extends StatelessWidget {
               popUpOAYSMenuItem(),
             ],
           ),
-          drawer: Container(
+          drawer: SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
             child: Drawer(
               elevation: 0,
@@ -186,12 +186,12 @@ class OAYSHomeScreen extends StatelessWidget {
             // ),
             if (userController.oaysUser.isMerchant)
               oAYSMenuOption(
-                3,
+                2,
                 addOfferProduct,
               ),
             if (userController.oaysUser.isMerchant)
               oAYSMenuOption(
-                4,
+                3,
                 updateOffer,
               ),
           ],

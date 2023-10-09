@@ -4,6 +4,7 @@ import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/screens/oays_signin_screen.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
+import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSCustomerSignUpController extends GetxController {
   static OAYSCustomerSignUpController get instance => Get.find();
@@ -17,13 +18,13 @@ class OAYSCustomerSignUpController extends GetxController {
 
   void createCustomerProfile() async {
     if (custUserName.text.isEmpty) {
-      _showMessage('Please enter your user name');
+      showMessage('Please enter your user name');
     } else if (custEmailAddress.text.isEmpty) {
-      _showMessage('Please enter your email address');
+      showMessage('Please enter your email address');
     } else if (custPassword.text.isEmpty) {
-      _showMessage('Please enter your password');
+      showMessage('Please enter your password');
     } else if (custLocation.text.isEmpty) {
-      _showMessage('Please enter your location');
+      showMessage('Please enter your location');
     } else {
       isRegisterSuccess.value = true;
 
@@ -37,24 +38,24 @@ class OAYSCustomerSignUpController extends GetxController {
           )
           .whenComplete(() => isRegisterSuccess.value = false);
       if (error != 'Success') {
-        _showMessage(error.toString());
+        showMessage(error.toString());
       } else {
-        _showMessage('user created successfully');
+        showMessage('user created successfully');
         _clearScreen();
         Get.to(() => OAYSSignInScreen());
       }
     }
   }
 
-  _showMessage(String info) {
-    Get.snackbar(
-      'Info',
-      info,
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: oaysFontColor,
-      backgroundColor: boxFillColor,
-    );
-  }
+  // _showMessage(String info) {
+  //   Get.snackbar(
+  //     'Info',
+  //     info,
+  //     snackPosition: SnackPosition.BOTTOM,
+  //     colorText: oaysFontColor,
+  //     backgroundColor: boxFillColor,
+  //   );
+  // }
 
   _clearScreen() {
     custUserName.text = '';

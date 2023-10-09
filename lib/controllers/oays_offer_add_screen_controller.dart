@@ -12,6 +12,7 @@ import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
+import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSOfferAddScreenController extends GetxController {
   // static OAYSOfferAddScreenController get instance => Get.find();
@@ -42,14 +43,15 @@ class OAYSOfferAddScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (!isUserLogout) {
+    // if (!isUserLogout) {
+    if (isUserLoggedIn) {
       userController = Get.find<OAYSUserController>();
     }
   }
 
   void pickProductImageFromGallery() async {
     if (isGestureTapDisabled.value && isNoProductImage.value) {
-      _showMessage('To add image, please uncheck no product image.');
+      showMessage('To add image, please uncheck no product image.');
     } else {
       productImagePath.value = await _selectImageFromGallery();
       if (productImagePath.value != '' && isNoProductImage.value) {
@@ -90,9 +92,9 @@ class OAYSOfferAddScreenController extends GetxController {
         offerProductEndDateController.text.isEmpty ||
         offerProductWeightController.text.isEmpty ||
         offerProductDescriptionController.text.isEmpty) {
-      _showMessage('Please fill the required details.');
+      showMessage('Please fill the required details.');
     } else if (!isNoProductImage.value && productImagePath.value == '') {
-      _showMessage('Please add offer product image.');
+      showMessage('Please add offer product image.');
     } else {
       DateFormat dateFormat = DateFormat('dd-MM-yyyy');
       final startDate = dateFormat.parse(offerProductStartDateController.text);
@@ -146,16 +148,16 @@ class OAYSOfferAddScreenController extends GetxController {
             .addOfferProduct(op, userController.oaysUser.userId, offerId);
         if (status == 'Success') {
           clearScreen();
-          navigateToScreenIndex = 3;
-          _showMessage('Offer Added Successfully.');
+          navigateToScreenIndex = 2;
+          showMessage('Offer Added Successfully.');
           Get.offAll(() => OAYSHomeScreen());
         } else {
           clearScreen();
-          _showMessage(status);
+          showMessage(status);
         }
         isAddProductSuccess.value = !isAddProductSuccess.value;
       } else {
-        _showMessage('Offer end date should be greater than offer start date');
+        showMessage('Offer end date should be greater than offer start date');
         isAddProductSuccess.value = !isAddProductSuccess.value;
       }
     }
@@ -183,24 +185,24 @@ class OAYSOfferAddScreenController extends GetxController {
     offerProductDescriptionController.text = '';
   }
 
-  void _showMessage(String info) {
-    Get.snackbar(
-      'Info',
-      info,
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: oaysFontColor,
-      backgroundColor: boxFillColor,
-    );
-  }
+  // void _showMessage(String info) {
+  //   Get.snackbar(
+  //     'Info',
+  //     info,
+  //     snackPosition: SnackPosition.BOTTOM,
+  //     colorText: oaysFontColor,
+  //     backgroundColor: boxFillColor,
+  //   );
+  // }
 
   void doDiscountPercentageCalc() {
     if (offerProductActualPriceController.text.isEmpty ||
         offerProductDiscountPriceController.text.isEmpty) {
-      _showMessage('Actual price or Discount price is missing');
+      showMessage('Actual price or Discount price is missing');
     } else if (double.parse(offerProductDiscountPriceController.text) >
         double.parse(offerProductActualPriceController.text)) {
       offerProductDiscountPercentController.text = '0.0';
-      _showMessage('Discount price should be less than lower price');
+      showMessage('Discount price should be less than lower price');
     } else {
       double actPrice = double.parse(offerProductActualPriceController.text);
       double discPrice = double.parse(offerProductDiscountPriceController.text);

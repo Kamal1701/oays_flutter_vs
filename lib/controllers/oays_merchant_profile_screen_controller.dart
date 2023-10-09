@@ -26,9 +26,10 @@ class OAYSMerchantProfileScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (!isUserLogout) {
+    // if (!isUserLogout) {
+    if (isUserLoggedIn) {
       userController = Get.put(OAYSUserController());
-
+      oaysUserLocation = userController.oaysUser.userLocation;
       setUserProfile();
     }
   }
@@ -55,7 +56,8 @@ class OAYSMerchantProfileScreenController extends GetxController {
         merchantShopState.text,
         merchantShopPincode.text);
     if (error == 'Success') {
-      if (!isUserLogout) {
+      // if (!isUserLogout) {
+      if (isUserLoggedIn) {
         userController = Get.find<OAYSUserController>();
         userController.oaysUser.userLocation = merchantLocation.text;
         userController.oaysUser.shopName = merchantShopName.text;

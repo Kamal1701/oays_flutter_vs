@@ -19,7 +19,8 @@ class OAYSOfferProductController extends GetxController {
   void onInit() async {
     super.onInit();
     // String uid = Get.find<OAYSAuthenticationController>().user!.uid;
-    if (!isUserLogout) {
+    // if (!isUserLogout) {
+    if (isUserLoggedIn) {
       String uId = OAYSAuthenticationController.instance.user!.uid;
       // _offerProductList.bindStream(
       //     OAYSDatabaseService().getOfferProductStreamByUserIdForMerchant(uId));

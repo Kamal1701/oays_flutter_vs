@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/controllers/oays_offer_near_me_screen_controller.dart';
+import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/screens/oays_all_offers_screen.dart';
 import 'package:oaysflutter/screens/oays_customer_profile_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_profile_screen.dart';
@@ -23,16 +24,16 @@ class OAYSHomeScreenDrawerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isUserLogout = false;
+    // isUserLogout = false;
     Get.put(OAYSOfferNearMeScreenController());
   }
 
   final screenTitle = [
     offerNearMe,
     allOffers,
-    profile,
     addOfferProduct,
     updateOffer,
+    profile,
     profileMerchant,
   ];
 
@@ -47,15 +48,16 @@ class OAYSHomeScreenDrawerController extends GetxController {
     popUpMenuIndex.value = index;
     switch (popUpMenuIndex.value) {
       case 0:
-        navigateToScreenIndex = isMerchant ? 5 : 2;
+        navigateToScreenIndex = isMerchant ? 5 : 4;
         setSelectedMenuIndex(index);
+        // Get.offAll(() => OAYSHomeScreen());
         break;
-      // Get.offAll(() => OAYSHomeScreen());
 
       case 1:
         oaysUserSignOut();
         Get.deleteAll();
         Get.offAll(() => OAYSSignInScreen());
+        // isUserLogout = false;
         break;
     }
   }
@@ -79,25 +81,25 @@ class OAYSHomeScreenDrawerController extends GetxController {
         return OAYSAllOffersScreen();
 
       case 2:
-        return OAYSCustomerProfileScreen();
-
-      case 3:
         return OAYSOfferAddScreen();
 
-      case 4:
+      case 3:
         return isUserLogout
             ? OAYSSignInScreen()
             : OAYSMerchantViewOfferScreen();
+
+      case 4:
+        return OAYSCustomerProfileScreen();
+
       case 5:
         return OAYSMerchantProfileScreen();
-      default:
-        break;
     }
     // update();
   }
 
   void oaysUserSignOut() {
-    isUserLogout = true;
+    // isUserLogout = true;
+
     Get.find<OAYSAuthenticationController>().userSignOut();
   }
 }

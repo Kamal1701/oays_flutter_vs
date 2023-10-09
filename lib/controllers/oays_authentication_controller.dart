@@ -131,6 +131,7 @@ class OAYSAuthenticationController extends GetxController {
       navigateToScreenIndex = 0;
       Get.find<OAYSUserController>().clear();
       _firebaseUser.value = null;
+      isUserLoggedIn = false;
       await _mauth.signOut();
     } catch (e) {
       Get.snackbar(

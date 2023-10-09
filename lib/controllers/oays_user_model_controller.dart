@@ -14,9 +14,14 @@ class OAYSUserController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    if (!isUserLogout) {
+    print(isUserLoggedIn);
+    // if (!isUserLogout) {
+    if (isUserLoggedIn) {
       oaysUser = await OAYSDatabaseService()
           .getCustomer(Get.find<OAYSAuthenticationController>().user!.uid);
+      oaysUserLocation = oaysUser.userLocation;
+      print('userController');
+      print(oaysUserLocation);
     }
   }
 

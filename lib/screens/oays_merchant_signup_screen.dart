@@ -35,7 +35,7 @@ class OAYSMerchantSignUpScreen extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(20, 120, 20, 0),
                           child: Column(
                             children: [
-                              addVerticalSpace(30),
+                              addVerticalSpace(15),
                               const Text(
                                 'Merchant Registration',
                                 style: TextStyle(

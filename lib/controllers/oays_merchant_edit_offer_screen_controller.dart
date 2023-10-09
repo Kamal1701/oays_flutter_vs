@@ -12,6 +12,7 @@ import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/color_constant.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
+import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSMerchantModifyOfferScreenController extends GetxController {
   OAYSUserController userController =
@@ -48,7 +49,8 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (!isUserLogout) {
+    // if (!isUserLogout) {
+    if (isUserLoggedIn) {
       userController = Get.find<OAYSUserController>();
       getOfferProduct(oaysOfferProduct);
     }
@@ -56,7 +58,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
 
   void pickProductImageFromGallery() async {
     if (isGestureTapDisabled.value && isNoProductImage.value) {
-      _showMessage('To add image, please uncheck no product image.');
+      showMessage('To add image, please uncheck no product image.');
     } else {
       productImagePath.value = await _selectImageFromGallery();
 
@@ -106,23 +108,23 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
       if (!oaysOfferProduct.isOfferImageBlank) {
         await _deleteImageReference(oaysOfferProduct.offerImageUrl);
       }
-      _showMessage('Offer Product deleted successfully');
-      navigateToScreenIndex = 4;
+      showMessage('Offer Product deleted successfully');
+      navigateToScreenIndex = 3;
       Get.offAll(() => OAYSHomeScreen());
     } else {
-      _showMessage(status);
+      showMessage(status);
     }
   }
 
-  void _showMessage(String info) {
-    Get.snackbar(
-      'Info',
-      info,
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: oaysFontColor,
-      backgroundColor: boxFillColor,
-    );
-  }
+  // void _showMessage(String info) {
+  //   Get.snackbar(
+  //     'Info',
+  //     info,
+  //     snackPosition: SnackPosition.BOTTOM,
+  //     colorText: oaysFontColor,
+  //     backgroundColor: boxFillColor,
+  //   );
+  // }
 
   void getOfferProduct(OAYSOfferProduct offerProduct) {
     productImageUrl.value = offerProduct.offerImageUrl;
@@ -165,9 +167,9 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
         offerProductEndDateController.text.isEmpty ||
         offerProductWeightController.text.isEmpty ||
         offerProductDescriptionController.text.isEmpty) {
-      _showMessage('Please fill the required details.');
+      showMessage('Please fill the required details.');
     } else if (!isNoProductImage.value && productImagePath.value == '') {
-      _showMessage('Please add offer product image.');
+      showMessage('Please add offer product image.');
     } else {
       DateFormat dateFormat = DateFormat('dd-MM-yyyy');
       final startDate = dateFormat.parse(offerProductStartDateController.text);
@@ -221,15 +223,15 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
         String? status = await OAYSDatabaseService().updateOfferProduct(op,
             userController.oaysUser.userId, oaysOfferProduct.offerProductId);
         if (status == 'Success') {
-          navigateToScreenIndex = 4;
-          _showMessage('Offer updated Successfully.');
+          navigateToScreenIndex = 3;
+          showMessage('Offer updated Successfully.');
           Get.offAll(() => OAYSHomeScreen());
         } else {
-          _showMessage(status);
+          showMessage(status);
         }
         isUpdateProductSuccess.value = !isUpdateProductSuccess.value;
       } else {
-        _showMessage('Offer end date should be greater than offer start date');
+        showMessage('Offer end date should be greater than offer start date');
         isUpdateProductSuccess.value = !isUpdateProductSuccess.value;
       }
     }
@@ -243,11 +245,11 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
   void doDiscountPercentageCalc() {
     if (offerProductActualPriceController.text.isEmpty ||
         offerProductDiscountPriceController.text.isEmpty) {
-      _showMessage('Actual price or Discount price is missing');
+      showMessage('Actual price or Discount price is missing');
     } else if (double.parse(offerProductDiscountPriceController.text) >
         double.parse(offerProductActualPriceController.text)) {
       offerProductDiscountPercentController.text = '0.0';
-      _showMessage('Discount price should be less than lower price');
+      showMessage('Discount price should be less than lower price');
     } else {
       double actPrice = double.parse(offerProductActualPriceController.text);
       double discPrice = double.parse(offerProductDiscountPriceController.text);
@@ -258,7 +260,7 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
   }
 
   void cancelDialogBox() {
-    navigateToScreenIndex = 4;
+    navigateToScreenIndex = 3;
     Get.offAll(() => OAYSHomeScreen());
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/screens/oays_customer_signup_screen.dart';
+import 'package:oaysflutter/screens/oays_forgot_password_screen.dart';
 import 'package:oaysflutter/screens/oays_home_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_signup_screen.dart';
-import 'package:oaysflutter/utils/constants/color_constant.dart';
+import 'package:oaysflutter/utils/constants/global_variable.dart';
+import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSSignInScreenController extends GetxController {
   static OAYSSignInScreenController get instance => Get.find();
@@ -14,9 +16,9 @@ class OAYSSignInScreenController extends GetxController {
 
   void oaysUserSignin() async {
     if (emailAddress.text.isEmpty) {
-      _showMessage('Please enter your email address');
+      showMessage('Please enter your email address');
     } else if (password.text.isEmpty) {
-      _showMessage('Please enter your password');
+      showMessage('Please enter your password');
     } else {
       isLoginSuccess.value = true;
 
@@ -26,13 +28,14 @@ class OAYSSignInScreenController extends GetxController {
         password: password.text.trim(),
       )
           .whenComplete(() {
+        isUserLoggedIn = true;
         isLoginSuccess.value = false;
         clearScreen();
       });
       if (error != 'Success') {
-        _showMessage(error.toString());
+        showMessage(error.toString());
       } else {
-        _showMessage('Logged-in successfully');
+        showMessage('Logged-in successfully');
         Get.to(() => OAYSHomeScreen());
       }
     }
@@ -51,13 +54,16 @@ class OAYSSignInScreenController extends GetxController {
     Get.to(() => OAYSMerchantSignUpScreen());
   }
 
-  void _showMessage(String info) {
-    Get.snackbar(
-      'Info',
-      info,
-      snackPosition: SnackPosition.BOTTOM,
-      colorText: oaysFontColor,
-      backgroundColor: boxFillColor,
-    );
+  void oaysResetPassword() {
+    Get.to(() => OAYSForgotPasswordScreen());
   }
+  // void _showMessage(String info) {
+  //   Get.snackbar(
+  //     'Info',
+  //     info,
+  //     snackPosition: SnackPosition.BOTTOM,
+  //     colorText: oaysFontColor,
+  //     backgroundColor: boxFillColor,
+  //   );
+  // }
 }

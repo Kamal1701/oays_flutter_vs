@@ -103,6 +103,7 @@ class OAYSDatabaseService {
 
   Future<OAYSUser?> getCustomer(String authId) async {
     try {
+      print('getCustomer(authId) $authId');
       DocumentSnapshot snapshot =
           await _db.collection("CustomerProfile").doc(authId).get();
       if (snapshot.exists) {
@@ -298,7 +299,8 @@ class OAYSDatabaseService {
   //   });
   // }
 
-  Future<List<OAYSOfferProduct>> getOfferNearMeForUserByLocation() async {
+  Future<List<OAYSOfferProduct>> getOfferNearMeForUserByLocation(
+      String location) async {
     final CollectionReference collection = _db.collection(productDetail);
     List<OAYSOfferProduct> offerProduct = [];
 
@@ -307,13 +309,19 @@ class OAYSDatabaseService {
       final CollectionReference subcollection =
           document.reference.collection(offerProductDetail);
       final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
-          await subcollection.orderBy("updatedDate", descending: true).get()
-              as QuerySnapshot<Map<String, dynamic>>;
+          await subcollection
+              // .where('shopCity', isEqualTo: 'Avadi')
+              .orderBy("updatedDate", descending: true)
+              .get() as QuerySnapshot<Map<String, dynamic>>;
 
       for (final QueryDocumentSnapshot subcollectionDocument
           in subcollectionQuerySnapshot.docs) {
-        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
-            subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
+        DocumentSnapshot<Map<String, dynamic>> docsnap =
+            subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>;
+        if (docsnap.data()!['shopCity'] == 'Avadi') {
+          offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
+              subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
+        }
       }
     }
 

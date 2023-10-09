@@ -20,8 +20,10 @@ class OAYSCustomerProfileScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (!isUserLogout) {
+    // if (!isUserLogout) {
+    if (isUserLoggedIn) {
       userController = Get.put(OAYSUserController());
+      oaysUserLocation = userController.oaysUser.userLocation;
       setUserProfile();
     }
   }

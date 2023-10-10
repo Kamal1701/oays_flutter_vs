@@ -19,7 +19,7 @@ class OAYSUserController extends GetxController {
     if (isUserLoggedIn) {
       oaysUser = await OAYSDatabaseService()
           .getCustomer(Get.find<OAYSAuthenticationController>().user!.uid);
-      oaysUserLocation = oaysUser.userLocation;
+      // oaysUserLocation = oaysUser.userLocation;
       print('userController');
       print(oaysUserLocation);
     }

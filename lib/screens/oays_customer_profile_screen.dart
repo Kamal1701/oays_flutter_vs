@@ -12,16 +12,7 @@ class OAYSCustomerProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // Scaffold(
-        //   appBar: AppBar(
-        //     title: const Text(
-        //       profile,
-        //     ),
-        //     backgroundColor: backgroundDarkColor,
-        //   ),
-        //   body:
-        Container(
+    return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -45,16 +36,10 @@ class OAYSCustomerProfileScreen extends StatelessWidget {
                 ),
               ),
               addVerticalSpace(30),
-              // OAYSCustomTextField(
-              //   controller: profileUpdateController.custUserName,
-              //   labelText: 'User Name',
-              //   obscureText: false,
-              // ),
               TextField(
                 enabled: false,
                 controller: profileUpdateController.custUserName,
                 decoration: InputDecoration(
-                    // hintText: 'User Name',
                     labelText: 'User Name',
                     labelStyle: TextStyle(
                         fontSize: 18,
@@ -63,16 +48,10 @@ class OAYSCustomerProfileScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.black, fontSize: 18.0),
               ),
               addVerticalSpace(15),
-              // OAYSCustomTextField(
-              //   controller: profileUpdateController.custEmailAddress,
-              //   labelText: 'Email Address',
-              //   obscureText: false,
-              // ),
               TextField(
                 enabled: false,
                 controller: profileUpdateController.custEmailAddress,
                 decoration: InputDecoration(
-                    // hintText: 'Email Address',
                     labelText: 'Email Address',
                     labelStyle: TextStyle(
                         fontSize: 18,
@@ -81,16 +60,6 @@ class OAYSCustomerProfileScreen extends StatelessWidget {
                 style: const TextStyle(color: Colors.black, fontSize: 18.0),
               ),
               addVerticalSpace(15),
-              // OAYSCustomTextField(
-              //   controller: profileUpdateController.custPassword,
-              //   labelText: 'Password',
-              //   obscureText: true,
-              // ),
-              // addVerticalSpace(15),
-              // OAYSCustomTextField(
-              //     controller: profileUpdateController.custLocation,
-              //     labelText: 'User Location',
-              //     obscureText: false),
               TextField(
                 controller: profileUpdateController.custLocation,
                 decoration: InputDecoration(
@@ -133,8 +102,6 @@ class OAYSCustomerProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-      // ),
-      // drawer: OAYSNavigationDrawer(),
     );
   }
 }

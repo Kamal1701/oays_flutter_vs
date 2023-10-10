@@ -23,8 +23,6 @@ class OAYSOfferNearMeScreenController extends GetxController {
     super.onInit();
     // if (!isUserLogout) {
     if (isUserLoggedIn) {
-      print('OAYSOfferNearMeScreenController');
-      print(oaysUserLocation);
       await OAYSDatabaseService()
           .getOfferNearMeForUserByLocation(oaysUserLocation)
           .then((value) {

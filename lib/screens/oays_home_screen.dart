@@ -127,7 +127,7 @@ class OAYSHomeScreen extends StatelessWidget {
   Widget popUpOAYSMenuItem() {
     return PopupMenuButton(
       onSelected: (value) {
-        drawerController.onPopupMenuItemSection(
+        drawerController.onPopupMenuItemSelection(
             value, userController.oaysUser.isMerchant);
       },
       offset: Offset(0.0, AppBar().preferredSize.height),

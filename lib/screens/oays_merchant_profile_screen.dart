@@ -140,7 +140,7 @@ class OAYSMerchantProfileScreen extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(30, 0, 15, 0),
                       child: ElevatedButton(
                         onPressed: () async {
-                          profileUpdateController.updateCustomerProfile();
+                          profileUpdateController.updateMerchantProfile();
                         },
                         child: const Text("Update"),
                       ),
@@ -159,6 +159,7 @@ class OAYSMerchantProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              addVerticalSpace(30),
             ],
           ),
         ),

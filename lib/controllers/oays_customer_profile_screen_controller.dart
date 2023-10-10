@@ -21,7 +21,9 @@ class OAYSCustomerProfileScreenController extends GetxController {
   void onInit() {
     super.onInit();
     // if (!isUserLogout) {
+    print('customer profile controller $isUserLoggedIn');
     if (isUserLoggedIn) {
+      print('customer profile controller on init called');
       userController = Get.put(OAYSUserController());
       oaysUserLocation = userController.oaysUser.userLocation;
       setUserProfile();
@@ -39,9 +41,12 @@ class OAYSCustomerProfileScreenController extends GetxController {
     String error = await OAYSDatabaseService().updateOAYSCustomer(
         OAYSAuthenticationController.instance.user!.uid, custLocation.text);
     if (error == 'Success') {
-      if (!isUserLogout) {
+      // if (!isUserLogout) {
+      if (isUserLoggedIn) {
         userController = Get.find<OAYSUserController>();
         userController.oaysUser.userLocation = custLocation.text;
+        print('update customer profile ${custLocation.text}');
+        oaysUserLocation = custLocation.text;
         navigateToScreenIndex = 0;
         showMessage('Profile updated Successfully.');
         Get.offAll(() => OAYSHomeScreen());

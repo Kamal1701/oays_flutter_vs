@@ -79,7 +79,7 @@ class OAYSDatabaseService {
     } on FirebaseException catch (e) {
       return e.message.toString();
     } catch (e) {
-      return 'Error in add customer';
+      return 'Error in update customer profile';
     }
   }
 
@@ -103,7 +103,6 @@ class OAYSDatabaseService {
 
   Future<OAYSUser?> getCustomer(String authId) async {
     try {
-      print('getCustomer(authId) $authId');
       DocumentSnapshot snapshot =
           await _db.collection("CustomerProfile").doc(authId).get();
       if (snapshot.exists) {
@@ -318,7 +317,9 @@ class OAYSDatabaseService {
           in subcollectionQuerySnapshot.docs) {
         DocumentSnapshot<Map<String, dynamic>> docsnap =
             subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>;
-        if (docsnap.data()!['shopCity'] == 'Avadi') {
+        // print(docsnap.data()!['shopCity']);
+        // print('global location $location');
+        if (docsnap.data()!['shopCity'] == location) {
           offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
               subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
         }

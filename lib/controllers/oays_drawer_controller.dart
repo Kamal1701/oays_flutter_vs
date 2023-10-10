@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:oaysflutter/controllers/oays_authentication_controller.dart';
 import 'package:oaysflutter/controllers/oays_offer_near_me_screen_controller.dart';
-import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/screens/oays_all_offers_screen.dart';
 import 'package:oaysflutter/screens/oays_customer_profile_screen.dart';
 import 'package:oaysflutter/screens/oays_merchant_profile_screen.dart';
@@ -44,7 +43,7 @@ class OAYSHomeScreenDrawerController extends GetxController {
     update();
   }
 
-  void onPopupMenuItemSection(int index, bool isMerchant) {
+  void onPopupMenuItemSelection(int index, bool isMerchant) {
     popUpMenuIndex.value = index;
     switch (popUpMenuIndex.value) {
       case 0:
@@ -84,9 +83,7 @@ class OAYSHomeScreenDrawerController extends GetxController {
         return OAYSOfferAddScreen();
 
       case 3:
-        return isUserLogout
-            ? OAYSSignInScreen()
-            : OAYSMerchantViewOfferScreen();
+        return OAYSMerchantViewOfferScreen();
 
       case 4:
         return OAYSCustomerProfileScreen();

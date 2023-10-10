@@ -27,7 +27,9 @@ class OAYSMerchantProfileScreenController extends GetxController {
   void onInit() {
     super.onInit();
     // if (!isUserLogout) {
+    print('merchant profile controller $isUserLoggedIn');
     if (isUserLoggedIn) {
+      print('customer profile controller on init called');
       userController = Get.put(OAYSUserController());
       oaysUserLocation = userController.oaysUser.userLocation;
       setUserProfile();
@@ -46,7 +48,7 @@ class OAYSMerchantProfileScreenController extends GetxController {
     merchantShopPincode.text = userController.oaysUser.shopPincode;
   }
 
-  void updateCustomerProfile() async {
+  void updateMerchantProfile() async {
     String error = await OAYSDatabaseService().updateOAYSMerchant(
         OAYSAuthenticationController.instance.user!.uid,
         merchantLocation.text,
@@ -65,6 +67,7 @@ class OAYSMerchantProfileScreenController extends GetxController {
         userController.oaysUser.shopCity = merchantShopCity.text;
         userController.oaysUser.shopState = merchantShopState.text;
         userController.oaysUser.shopPincode = merchantShopPincode.text;
+        oaysUserLocation = merchantLocation.text;
         navigateToScreenIndex = 0;
         showMessage('Profile updated Successfully.');
         Get.offAll(() => OAYSHomeScreen());

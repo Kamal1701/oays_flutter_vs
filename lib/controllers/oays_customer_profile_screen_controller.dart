@@ -25,12 +25,13 @@ class OAYSCustomerProfileScreenController extends GetxController {
     if (isUserLoggedIn) {
       print('customer profile controller on init called');
       userController = Get.put(OAYSUserController());
-      oaysUserLocation = userController.oaysUser.userLocation;
+      // oaysUserLocation = userController.oaysUser.userLocation;
       setUserProfile();
     }
   }
 
   void setUserProfile() {
+    print('setUserProfile called');
     custUserName.text = userController.oaysUser.userName;
     custEmailAddress.text =
         Get.find<OAYSAuthenticationController>().user!.email!;

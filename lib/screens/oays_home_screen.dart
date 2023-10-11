@@ -63,62 +63,64 @@ class OAYSHomeScreen extends StatelessWidget {
           // SystemNavigator.pop();
           // return false;
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(drawerController.getAppBarTitle()),
-            backgroundColor: backgroundDarkColor,
-            actions: [
-              popUpOAYSMenuItem(),
-            ],
-          ),
-          drawer: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: Drawer(
-              elevation: 0,
-              backgroundColor: boxFillColor,
-              width: 250,
-              child: ListView(
-                children: [
-                  GetBuilder<OAYSUserController>(
-                    builder: (controller) {
-                      return DrawerHeader(
-                        decoration: BoxDecoration(
-                          color: backgroundDarkColor,
-                        ),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  userController.oaysUser.userName,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Obx(
-                                  () => Text(
-                                    userController.oaysUser.userLocation,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(drawerController.getAppBarTitle()),
+              backgroundColor: backgroundDarkColor,
+              actions: [
+                popUpOAYSMenuItem(),
+              ],
+            ),
+            drawer: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: Drawer(
+                elevation: 0,
+                backgroundColor: boxFillColor,
+                width: 250,
+                child: ListView(
+                  children: [
+                    GetBuilder<OAYSUserController>(
+                      builder: (controller) {
+                        return DrawerHeader(
+                          decoration: BoxDecoration(
+                            color: backgroundDarkColor,
+                          ),
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    userController.oaysUser.userName,
                                     style: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.normal),
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  oAYSDrawerList(),
-                ],
+                                  Obx(
+                                    () => Text(
+                                      userController.oaysUser.userLocation,
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    oAYSDrawerList(),
+                  ],
+                ),
               ),
             ),
+            body: drawerController
+                .setSelectedMenuIndex(drawerController.selectedIndex.value),
           ),
-          body: drawerController
-              .setSelectedMenuIndex(drawerController.selectedIndex.value),
         ),
       ),
     );

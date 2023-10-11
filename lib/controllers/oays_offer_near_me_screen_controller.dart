@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:get/get.dart';
-import 'package:oaysflutter/controllers/oays_user_model_controller.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/screens/oays_offer_product_detail_screen.dart';
 import 'package:oaysflutter/services/oays_database_service.dart';

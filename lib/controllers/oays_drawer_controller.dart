@@ -45,10 +45,17 @@ class OAYSHomeScreenDrawerController extends GetxController {
 
   void onPopupMenuItemSelection(int index, bool isMerchant) {
     popUpMenuIndex.value = index;
+    print('onPopupMenuItemSelection');
+    print(popUpMenuIndex.value);
     switch (popUpMenuIndex.value) {
       case 0:
-        navigateToScreenIndex = isMerchant ? 5 : 4;
-        setSelectedMenuIndex(index);
+        // navigateToScreenIndex = isMerchant ? 5 : 4;
+        // setSelectedMenuIndex(index);
+        isMerchant
+            ? Get.to(() => OAYSMerchantProfileScreen())
+            : Get.to(() => OAYSCustomerProfileScreen());
+
+        print('inside switch case 0 $navigateToScreenIndex');
         // Get.offAll(() => OAYSHomeScreen());
         break;
 
@@ -67,10 +74,17 @@ class OAYSHomeScreenDrawerController extends GetxController {
         : selectedIndex.value];
   }
 
+  // String getAppBarTitleOnPopupMenu() {
+  //   return screenTitle[selectedIndex.value = navigateToScreenIndex != 0
+  //       ? navigateToScreenIndex
+  //       : selectedIndex.value];
+  // }
+
   setSelectedMenuIndex(int index) {
+    print('before $navigateToScreenIndex');
     selectedIndex.value =
         navigateToScreenIndex != 0 ? navigateToScreenIndex : index;
-
+    print('after $navigateToScreenIndex');
     update();
     switch (selectedIndex.value) {
       case 0:
@@ -85,11 +99,12 @@ class OAYSHomeScreenDrawerController extends GetxController {
       case 3:
         return OAYSMerchantViewOfferScreen();
 
-      case 4:
-        return OAYSCustomerProfileScreen();
+      // case 4:
+      //   print('selectedIndex.value ${selectedIndex.value}');
+      //   return OAYSCustomerProfileScreen();
 
-      case 5:
-        return OAYSMerchantProfileScreen();
+      // case 5:
+      //   return OAYSMerchantProfileScreen();
     }
     // update();
   }

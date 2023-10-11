@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/models/oays_user_model.dart';
 import 'package:oaysflutter/utils/constants/string_constant.dart';
@@ -319,7 +320,8 @@ class OAYSDatabaseService {
             subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>;
         // print(docsnap.data()!['shopCity']);
         // print('global location $location');
-        if (docsnap.data()!['shopCity'] == location) {
+        if (docsnap.data()!['shopCity'] == location &&
+            isOfferActive(docsnap.data()!['offerProductEndDate'])) {
           offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
               subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
         }
@@ -343,8 +345,12 @@ class OAYSDatabaseService {
 
       for (final QueryDocumentSnapshot subcollectionDocument
           in subcollectionQuerySnapshot.docs) {
-        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
-            subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
+        DocumentSnapshot<Map<String, dynamic>> docsnap =
+            subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>;
+        if (isOfferActive(docsnap.data()!['offerProductEndDate'])) {
+          offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
+              subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>));
+        }
       }
     }
 
@@ -410,5 +416,16 @@ class OAYSDatabaseService {
     } catch (e) {
       return 'Unable to delete the product now. Please try again later.';
     }
+  }
+
+  bool isOfferActive(String endDate) {
+    final currentDate = DateTime.now();
+
+    DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+    final offerEndDate = dateFormat.parse(endDate);
+    if (offerEndDate.compareTo(currentDate) >= 0) {
+      return true;
+    }
+    return false;
   }
 }

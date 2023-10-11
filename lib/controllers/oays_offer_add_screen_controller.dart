@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -121,6 +122,20 @@ class OAYSOfferAddScreenController extends GetxController {
             offerId = value;
           },
         );
+
+        // final formatter = DateFormat('dd-MM-yyyy');
+        // final startDate = offerProductStartDateController.text;
+        // final parsedStartDate = DateTime.parse(startDate);
+
+        // final formattedStartDate = formatter.format(parsedStartDate);
+
+        // final endDate = offerProductStartDateController.text;
+        // final parsedEndDate = DateTime.parse(endDate);
+        // // final formatter = DateFormat('dd-MM-yyyy');
+        // final formattedEndDate = formatter.format(parsedEndDate);
+        // final startTimestamp =
+        //     Timestamp.fromDate(DateTime.parse(formattedStartDate));
+        // print(startTimestamp);
 
         OAYSOfferProduct op = OAYSOfferProduct(
           offerId,

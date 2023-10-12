@@ -5,9 +5,7 @@ import 'package:oaysflutter/services/oays_database_service.dart';
 import 'package:oaysflutter/utils/constants/global_variable.dart';
 
 class OAYSOfferProductController extends GetxController {
-  // RxList<OAYSOfferProduct> _offerProductList = <OAYSOfferProduct>[].obs;
   final _offerProductList = <OAYSOfferProduct>[].obs;
-
   List<OAYSOfferProduct> get offerProductList => _offerProductList;
 
   set offerProductList(List<OAYSOfferProduct>? value) =>
@@ -18,20 +16,14 @@ class OAYSOfferProductController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // String uid = Get.find<OAYSAuthenticationController>().user!.uid;
-    // if (!isUserLogout) {
     if (isUserLoggedIn) {
       String uId = OAYSAuthenticationController.instance.user!.uid;
-      // _offerProductList.bindStream(
-      //     OAYSDatabaseService().getOfferProductStreamByUserIdForMerchant(uId));
-
       await OAYSDatabaseService()
           .getOfferProductStreamByUserIdForMerchant(uId)
           .then((value) {
         offerProductList = value;
         isLoading.value = false;
       });
-      // isLoading.value = false;
     }
   }
 

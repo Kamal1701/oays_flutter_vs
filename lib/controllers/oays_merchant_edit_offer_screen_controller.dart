@@ -48,7 +48,6 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // if (!isUserLogout) {
     if (isUserLoggedIn) {
       userController = Get.find<OAYSUserController>();
       getOfferProduct(oaysOfferProduct);
@@ -114,16 +113,6 @@ class OAYSMerchantModifyOfferScreenController extends GetxController {
       showMessage(status);
     }
   }
-
-  // void _showMessage(String info) {
-  //   Get.snackbar(
-  //     'Info',
-  //     info,
-  //     snackPosition: SnackPosition.BOTTOM,
-  //     colorText: oaysFontColor,
-  //     backgroundColor: boxFillColor,
-  //   );
-  // }
 
   void getOfferProduct(OAYSOfferProduct offerProduct) {
     productImageUrl.value = offerProduct.offerImageUrl;

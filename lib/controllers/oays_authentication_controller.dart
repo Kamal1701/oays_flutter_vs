@@ -9,8 +9,6 @@ import 'package:oaysflutter/utils/constants/global_variable.dart';
 class OAYSAuthenticationController extends GetxController {
   static OAYSAuthenticationController get instance => Get.find();
   final _mauth = FirebaseAuth.instance;
-  // late FirebaseAuth _mauth;
-  // Rx<User?> _firebaseUser = Rx<User?>(null);
   final _firebaseUser = Rx<User?>(null);
 
   User? get user => _firebaseUser.value;

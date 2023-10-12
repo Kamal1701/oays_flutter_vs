@@ -66,16 +66,6 @@ class OAYSMerchantSignUpController extends GetxController {
     }
   }
 
-  // void _showMessage(String info) {
-  //   Get.snackbar(
-  //     'Info',
-  //     info,
-  //     snackPosition: SnackPosition.BOTTOM,
-  //     colorText: oaysFontColor,
-  //     backgroundColor: boxFillColor,
-  //   );
-  // }
-
   void _clearScreen() {
     merchantEmailAddress.text = '';
     merchantPassword.text = '';

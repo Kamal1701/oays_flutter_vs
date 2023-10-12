@@ -15,8 +15,6 @@ import 'package:oaysflutter/utils/constants/string_constant.dart';
 import 'package:oaysflutter/utils/helpers/helper_widget.dart';
 
 class OAYSOfferAddScreenController extends GetxController {
-  // static OAYSOfferAddScreenController get instance => Get.find();
-
   OAYSUserController userController =
       Get.put<OAYSUserController>(OAYSUserController());
 
@@ -123,20 +121,6 @@ class OAYSOfferAddScreenController extends GetxController {
           },
         );
 
-        // final formatter = DateFormat('dd-MM-yyyy');
-        // final startDate = offerProductStartDateController.text;
-        // final parsedStartDate = DateTime.parse(startDate);
-
-        // final formattedStartDate = formatter.format(parsedStartDate);
-
-        // final endDate = offerProductStartDateController.text;
-        // final parsedEndDate = DateTime.parse(endDate);
-        // // final formatter = DateFormat('dd-MM-yyyy');
-        // final formattedEndDate = formatter.format(parsedEndDate);
-        // final startTimestamp =
-        //     Timestamp.fromDate(DateTime.parse(formattedStartDate));
-        // print(startTimestamp);
-
         OAYSOfferProduct op = OAYSOfferProduct(
           offerId,
           productImageUrl.value,
@@ -198,16 +182,6 @@ class OAYSOfferAddScreenController extends GetxController {
     offerProductWeightController.text = '';
     offerProductDescriptionController.text = '';
   }
-
-  // void _showMessage(String info) {
-  //   Get.snackbar(
-  //     'Info',
-  //     info,
-  //     snackPosition: SnackPosition.BOTTOM,
-  //     colorText: oaysFontColor,
-  //     backgroundColor: boxFillColor,
-  //   );
-  // }
 
   void doDiscountPercentageCalc() {
     if (offerProductActualPriceController.text.isEmpty ||

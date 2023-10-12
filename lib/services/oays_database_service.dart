@@ -306,6 +306,8 @@ class OAYSDatabaseService {
 
     for (final QueryDocumentSnapshot document
         in await collection.get().then((value) => value.docs)) {
+      print(collection.get());
+      print(document.id);
       final CollectionReference subcollection =
           document.reference.collection(offerProductDetail);
       final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
@@ -313,13 +315,11 @@ class OAYSDatabaseService {
               // .where('shopCity', isEqualTo: 'Avadi')
               .orderBy("updatedDate", descending: true)
               .get() as QuerySnapshot<Map<String, dynamic>>;
-
+      // print(subcollectionQuerySnapshot.docs.length);
       for (final QueryDocumentSnapshot subcollectionDocument
           in subcollectionQuerySnapshot.docs) {
         DocumentSnapshot<Map<String, dynamic>> docsnap =
             subcollectionDocument as DocumentSnapshot<Map<String, dynamic>>;
-        // print(docsnap.data()!['shopCity']);
-        // print('global location $location');
         if (docsnap.data()!['shopCity'] == location &&
             isOfferActive(docsnap.data()!['offerProductEndDate'])) {
           offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
@@ -420,10 +420,12 @@ class OAYSDatabaseService {
 
   bool isOfferActive(String endDate) {
     final currentDate = DateTime.now();
-
     DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+    final formattedCurrentDate =
+        dateFormat.parse(dateFormat.format(currentDate));
     final offerEndDate = dateFormat.parse(endDate);
-    if (offerEndDate.compareTo(currentDate) >= 0) {
+
+    if (offerEndDate.compareTo(formattedCurrentDate) >= 0) {
       return true;
     }
     return false;

@@ -58,10 +58,6 @@ class OAYSHomeScreen extends StatelessWidget {
               ],
             ),
           );
-
-          // If the user confirms, pop the current screen
-          // SystemNavigator.pop();
-          // return false;
         },
         child: SafeArea(
           child: Scaffold(
@@ -182,10 +178,6 @@ class OAYSHomeScreen extends StatelessWidget {
               1,
               allOffers,
             ),
-            // oAYSMenuOption(
-            //   2,
-            //   profile,
-            // ),
             if (userController.oaysUser.isMerchant)
               oAYSMenuOption(
                 2,

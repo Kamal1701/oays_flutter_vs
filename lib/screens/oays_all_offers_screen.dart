@@ -26,7 +26,6 @@ class OAYSAllOffersScreen extends StatelessWidget {
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
-                            // childAspectRatio: 1.5,
                             mainAxisExtent: 270,
                             crossAxisSpacing: 7,
                             mainAxisSpacing: 7,

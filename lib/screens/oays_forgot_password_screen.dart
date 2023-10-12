@@ -54,7 +54,7 @@ class OAYSForgotPasswordScreen extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(30, 0, 15, 0),
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  // resetController.addProduct();
+                                  resetController.resetEmailPassword();
                                 },
                                 child: const Text("Reset"),
                               ),

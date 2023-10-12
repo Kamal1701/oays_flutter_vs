@@ -17,7 +17,6 @@ class OAYSAllOffersScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    // if (!isUserLogout) {
     if (isUserLoggedIn) {
       await OAYSDatabaseService().getAllOffersForUserByAll().then((value) {
         offerProductList = value;

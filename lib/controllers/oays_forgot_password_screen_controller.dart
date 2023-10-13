@@ -15,6 +15,10 @@ class OAYSForgotPasswordScreenController extends GetxController {
   Future<void> resetEmailPassword() async {
     if (emailAddress.text.isNotEmpty) {
       if (validateEmail(emailAddress.text)) {
+        // try {
+        //   final user = await FirebaseAuth.instance
+        //       .fetchSignInMethodsForEmail(emailAddress.text);
+        //   if (user.isNotEmpty) {
         try {
           await FirebaseAuth.instance
               .sendPasswordResetEmail(email: emailAddress.text)
@@ -27,8 +31,15 @@ class OAYSForgotPasswordScreenController extends GetxController {
         } on FirebaseAuthException catch (e) {
           showMessage(e.toString());
         }
+        //   } else {
+        //     showMessage(
+        //         'Email address not found, please enter correct email address.');
+        //   }
+        // } on FirebaseAuthException catch (e) {
+        //   showMessage(e.toString());
+        // }
       } else {
-        showMessage('Please enter valid email address');
+        showMessage('Please enter valid email address.');
       }
     } else {
       showMessage('Please enter your email address');

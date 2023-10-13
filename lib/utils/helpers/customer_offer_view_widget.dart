@@ -43,6 +43,8 @@ Widget viewOfferContainer(OAYSOfferProduct offerProduct) {
               padding: const EdgeInsets.fromLTRB(8.0, 5.0, 0, 0),
               child: Text(
                 offerProduct.offerProductName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -63,6 +65,8 @@ Widget viewOfferContainer(OAYSOfferProduct offerProduct) {
               padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0, 0),
               child: Text(
                 offerProduct.offerProductActualPrice,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   decoration: TextDecoration.lineThrough,
                   decorationColor: Colors.red,
@@ -78,6 +82,8 @@ Widget viewOfferContainer(OAYSOfferProduct offerProduct) {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0, 0),
               child: Text(offerProduct.offerProductDiscountPrice,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
@@ -89,6 +95,8 @@ Widget viewOfferContainer(OAYSOfferProduct offerProduct) {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0, 0),
               child: Text(offerProduct.offerProductDiscountPerc,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
@@ -108,6 +116,8 @@ Widget viewOfferContainer(OAYSOfferProduct offerProduct) {
               padding: EdgeInsets.fromLTRB(8.0, 2.0, 0, 0),
               child: Text(
                 "Last Date ",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.normal,
@@ -120,6 +130,8 @@ Widget viewOfferContainer(OAYSOfferProduct offerProduct) {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(10.0, 3.0, 4.0, 0),
               child: Text(offerProduct.offerProductEndDate,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,

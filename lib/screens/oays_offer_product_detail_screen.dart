@@ -77,6 +77,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController
                                         .oaysOfferProduct.offerProductName,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.visible,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -91,6 +93,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController
                                         .oaysOfferProduct.offerProductBrandName,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.visible,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -105,6 +109,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController.oaysOfferProduct
                                         .offerProductActualPrice,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -118,6 +124,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController.oaysOfferProduct
                                         .offerProductDiscountPrice,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -128,6 +136,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController.oaysOfferProduct
                                         .offerProductDiscountPerc,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -142,6 +152,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController
                                         .oaysOfferProduct.offerProductWeigh,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -155,6 +167,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                 children: [
                                   const Text(
                                     "Start Date",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -165,6 +179,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController
                                         .oaysOfferProduct.offerProductStartDate,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -178,6 +194,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                 children: [
                                   const Text(
                                     "End Date",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -188,6 +206,8 @@ class OAYSOfferProductDetailScreen extends StatelessWidget {
                                   Text(
                                     productDetailController
                                         .oaysOfferProduct.offerProductEndDate,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,

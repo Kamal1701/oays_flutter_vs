@@ -87,7 +87,7 @@ class OAYSMerchantSignUpScreen extends StatelessWidget {
                                 OAYSCustomTextField(
                                   controller: signUpController.merchantShopCity,
                                   labelText: 'Shop City',
-                                  obscureText: true,
+                                  obscureText: false,
                                 ),
                                 addVerticalSpace(15),
                                 OAYSCustomTextField(

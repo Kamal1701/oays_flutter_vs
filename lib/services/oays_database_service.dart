@@ -306,8 +306,6 @@ class OAYSDatabaseService {
 
     for (final QueryDocumentSnapshot document
         in await collection.get().then((value) => value.docs)) {
-      print(collection.get());
-      print(document.id);
       final CollectionReference subcollection =
           document.reference.collection(offerProductDetail);
       final QuerySnapshot<Map<String, dynamic>> subcollectionQuerySnapshot =
@@ -424,7 +422,6 @@ class OAYSDatabaseService {
     final formattedCurrentDate =
         dateFormat.parse(dateFormat.format(currentDate));
     final offerEndDate = dateFormat.parse(endDate);
-
     if (offerEndDate.compareTo(formattedCurrentDate) >= 0) {
       return true;
     }

@@ -16,6 +16,7 @@ class OAYSDatabaseService {
     'updatedDate': FieldValue.serverTimestamp()
   };
 
+//Add OAYS Customer into customer_profile collection while register as customer
   Future<String?> addOAYSCustomer(OAYSUser user) async {
     try {
       String? status;
@@ -36,19 +37,15 @@ class OAYSDatabaseService {
     }
   }
 
+//Update the OAYS customer location into customer_profile collection from profile screen
   Future<String> updateOAYSCustomer(String uId, String location) async {
     try {
-      // String? status;
       Map<String, dynamic> locationUpdate = {
         'userLocation': location,
         'updatedDate': FieldValue.serverTimestamp()
       };
       CollectionReference collectRef = _db.collection(customerProfile);
       await collectRef.doc(uId).update(locationUpdate);
-      // .whenComplete(() {
-      //   status = 'Success';
-      // });
-
       return 'Success';
     } on FirebaseException catch (e) {
       return e.message.toString();
@@ -57,10 +54,10 @@ class OAYSDatabaseService {
     }
   }
 
+//update OAYS merchant profile into customer_profile collection from profile screen
   Future<String> updateOAYSMerchant(String uId, String location, String sName,
       String sStreetName, String sCity, String sState, String sPincode) async {
     try {
-      // String? status;
       Map<String, dynamic> locationUpdate = {
         'userLocation': location,
         'shopName': sName,
@@ -72,9 +69,6 @@ class OAYSDatabaseService {
       };
       CollectionReference collectRef = _db.collection(customerProfile);
       await collectRef.doc(uId).update(locationUpdate);
-      // .whenComplete(() {
-      //   status = 'Success';
-      // });
 
       return 'Success';
     } on FirebaseException catch (e) {
@@ -84,6 +78,7 @@ class OAYSDatabaseService {
     }
   }
 
+//Add OAYS merchant into customer_profile collection while register as Merchant
   Future<String?> addOAYSMerchant(OAYSUser user) async {
     try {
       String? status;
@@ -102,6 +97,11 @@ class OAYSDatabaseService {
     }
   }
 
+//Get OAYSCustomer profile
+  //Purpose
+  //To update navigation drawer header
+  //Filter the offer near me
+  //To update the profile screen
   Future<OAYSUser?> getCustomer(String authId) async {
     try {
       DocumentSnapshot snapshot =
@@ -117,6 +117,9 @@ class OAYSDatabaseService {
     return null;
   }
 
+  //Create new document id under the subcollection (offer_Detail) into product_detail collection
+  //this subcollection document id will be used to add new offer product under this id
+
   Future<String> getOfferProductId(String userId) async {
     try {
       final docRef = _db.collection(productDetail).doc(userId);
@@ -131,6 +134,9 @@ class OAYSDatabaseService {
       return 'Unable to add product now. Please try again later.';
     }
   }
+
+//Add new offer product into offerproductdetail subcollection using sub collection
+//document id which is created from getOfferProductId function
 
   Future<String> addOfferProduct(
       OAYSOfferProduct op, String userId, String offerId) async {
@@ -157,6 +163,8 @@ class OAYSDatabaseService {
       return 'Unable to add product now. Please try again later.';
     }
   }
+
+  //Update the offer product from Update screen
 
   Future<String> updateOfferProduct(
       OAYSOfferProduct op, String userId, String offerId) async {
@@ -261,18 +269,66 @@ class OAYSDatabaseService {
         .snapshots()
         .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
       List<OAYSOfferProduct> offerProduct = [];
+      offerProduct.clear();
       for (final DocumentSnapshot<Map<String, dynamic>> document
           in snapshot.docs) {
         document.reference.collection(offerProductDetail).snapshots().listen(
             (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
-          for (final DocumentSnapshot<
-                  Map<String, dynamic>> subcollectionDocument
-              in subcollectionSnapshot.docs) {
-            offerProduct.add(
-                OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
+          for (var change in subcollectionSnapshot.docChanges) {
+            print(change.type);
+            switch (change.type) {
+              case DocumentChangeType.added:
+                if (change.doc.data()!['shopCity'] == 'Pattabiram' &&
+                    isOfferActive(change.doc.data()!['offerProductEndDate'])) {
+                  // print(change.doc.data()!['shopCity']);
+                  offerProduct
+                      .add(OAYSOfferProduct.fromDocumentSnapshot(change.doc));
+                }
+                break;
+              case DocumentChangeType.modified:
+                offerProduct.removeWhere((element) =>
+                    element.offerProductId ==
+                    change.doc.data()!['offerProductId']);
+                if (change.doc.data()!['shopCity'] == 'Pattabiram' &&
+                    isOfferActive(change.doc.data()!['offerProductEndDate'])) {
+                  // for (int i = 0; i < offerProduct.length; i++) {
+                  //   if (offerProduct[i].offerProductId ==
+                  //       change.doc.data()!['offerProductId']) {
+                  // offerProduct.removeWhere((element) =>
+                  //     element.offerProductId ==
+                  //     change.doc.data()!['offerProductId']);
+                  //     break;
+                  //   }
+                  // }
+                  offerProduct
+                      .add(OAYSOfferProduct.fromDocumentSnapshot(change.doc));
+                }
+                break;
+              case DocumentChangeType.removed:
+                break;
+            }
           }
+          // for (final DocumentSnapshot<
+          //         Map<String, dynamic>> subcollectionDocument
+          //     in subcollectionSnapshot.docs) {
+          //   DocumentSnapshot<Map<String, dynamic>> docsnap =
+          //       subcollectionDocument;
+          //   if (docsnap.data()!['shopCity'] == 'Pattabiram' &&
+          //       isOfferActive(docsnap.data()!['offerProductEndDate'])) {
+          //     // print('inside getOfferNearMeForUserByStream');
+          //     print(docsnap.data()!['offerProductBrandName']);
+
+          //     // offerProduct.add(
+          //     //     OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
+          //     // print(offerProduct);
+          //   }
+          //   // subcollectionDocument.data()!.clear();
+          // }
+          // subcollectionSnapshot.docs.clear();
         });
+        // document.data()!.clear();
       }
+      // snapshot.docs.clear();
       return offerProduct;
     });
   }

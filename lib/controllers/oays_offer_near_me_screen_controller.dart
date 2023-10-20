@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:oaysflutter/models/oays_offer_product_model.dart';
 import 'package:oaysflutter/screens/oays_offer_product_detail_screen.dart';
@@ -19,12 +20,15 @@ class OAYSOfferNearMeScreenController extends GetxController {
   void onInit() async {
     super.onInit();
     if (isUserLoggedIn) {
-      await OAYSDatabaseService()
-          .getOfferNearMeForUserByLocation(oaysUserLocation)
-          .then((value) {
-        offerProductList = value;
-        isLoading.value = false;
-      });
+      // await OAYSDatabaseService()
+      //     .getOfferNearMeForUserByLocation(oaysUserLocation)
+      //     .then((value) {
+      //   offerProductList = value;
+      //   isLoading.value = false;
+      // });
+      _offerProductList
+          .bindStream(OAYSDatabaseService().getOfferNearMeForUserByStream());
+      isLoading.value = false;
     }
   }
 

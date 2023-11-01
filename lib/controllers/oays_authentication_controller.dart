@@ -129,6 +129,7 @@ class OAYSAuthenticationController extends GetxController {
 
   void userSignOut() async {
     try {
+      OAYSDatabaseService().clearListen();
       navigateToScreenIndex = 0;
       Get.find<OAYSUserController>().clear();
       _firebaseUser.value = null;

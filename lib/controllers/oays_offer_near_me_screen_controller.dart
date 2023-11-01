@@ -20,15 +20,38 @@ class OAYSOfferNearMeScreenController extends GetxController {
   void onInit() async {
     super.onInit();
     if (isUserLoggedIn) {
-      // await OAYSDatabaseService()
-      //     .getOfferNearMeForUserByLocation(oaysUserLocation)
-      //     .then((value) {
-      //   offerProductList = value;
-      //   isLoading.value = false;
-      // });
-      _offerProductList
-          .bindStream(OAYSDatabaseService().getOfferNearMeForUserByStream());
-      isLoading.value = false;
+      await OAYSDatabaseService()
+          .getOfferNearMeForUserByLocation(oaysUserLocation)
+          .then((value) {
+        offerProductList = value;
+        isLoading.value = false;
+      });
+      // _offerProductList
+      //     .bindStream(OAYSDatabaseService().getOfferNearMeForUserByStream());
+      // isLoading.value = false;
+      Stream<List<Map<String, dynamic>>> documentsStream =
+          OAYSDatabaseService().getUserIdStreamSubscription();
+      List<OAYSOfferProduct> offerList = [];
+      documentsStream.listen((documents) {
+        for (int i = 0; i < documents.length; i++) {
+          Stream<List<OAYSOfferProduct>> subdocumentsStream =
+              OAYSDatabaseService()
+                  .geOfferIdStreamSubscription(documents[i]['_id']);
+          subdocumentsStream.listen((subdocuments) {
+            // offerProductList = subdocuments;
+
+            for (int i = 0; i < subdocuments.length; i++) {
+              offerList.add(subdocuments[i]);
+            }
+            print(offerList.length);
+            offerProductList = offerList;
+            // print(subdocuments.length);
+          });
+        }
+        // subdocuments.forEach((map) {
+        //   print({map['_id']});
+        // });
+      });
     }
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
@@ -275,12 +277,11 @@ class OAYSDatabaseService {
         document.reference.collection(offerProductDetail).snapshots().listen(
             (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
           for (var change in subcollectionSnapshot.docChanges) {
-            print(change.type);
             switch (change.type) {
               case DocumentChangeType.added:
                 if (change.doc.data()!['shopCity'] == 'Pattabiram' &&
                     isOfferActive(change.doc.data()!['offerProductEndDate'])) {
-                  // print(change.doc.data()!['shopCity']);
+                  print(change.doc.data()!['shopCity']);
                   offerProduct
                       .add(OAYSOfferProduct.fromDocumentSnapshot(change.doc));
                 }
@@ -291,15 +292,6 @@ class OAYSDatabaseService {
                     change.doc.data()!['offerProductId']);
                 if (change.doc.data()!['shopCity'] == 'Pattabiram' &&
                     isOfferActive(change.doc.data()!['offerProductEndDate'])) {
-                  // for (int i = 0; i < offerProduct.length; i++) {
-                  //   if (offerProduct[i].offerProductId ==
-                  //       change.doc.data()!['offerProductId']) {
-                  // offerProduct.removeWhere((element) =>
-                  //     element.offerProductId ==
-                  //     change.doc.data()!['offerProductId']);
-                  //     break;
-                  //   }
-                  // }
                   offerProduct
                       .add(OAYSOfferProduct.fromDocumentSnapshot(change.doc));
                 }
@@ -354,6 +346,58 @@ class OAYSDatabaseService {
   //     return offerProduct;
   //   });
   // }
+
+  Stream<List<Map<String, dynamic>>> getUserIdStreamSubscription() {
+    CollectionReference collectionReference = _db.collection(productDetail);
+    StreamController<List<Map<String, dynamic>>> streamController =
+        StreamController<List<Map<String, dynamic>>>();
+
+    StreamSubscription<QuerySnapshot> subscription =
+        collectionReference.snapshots().listen((querySnapshot) {
+      List<Map<String, dynamic>> documents = [];
+
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        documents.add(doc.data() as Map<String, dynamic>);
+      }
+      streamController.add(documents);
+    });
+
+    streamController.onCancel = () {
+      subscription.cancel();
+    };
+
+    return streamController.stream;
+  }
+
+  Stream<List<OAYSOfferProduct>> geOfferIdStreamSubscription(String userId) {
+    CollectionReference collectionReference = _db
+        .collection(productDetail)
+        .doc(userId)
+        .collection(offerProductDetail);
+    StreamController<List<OAYSOfferProduct>> streamController =
+        StreamController<List<OAYSOfferProduct>>();
+
+    StreamSubscription<QuerySnapshot> subscription =
+        collectionReference.snapshots().listen((querySnapshot) {
+      List<Map<String, dynamic>> subdocuments = [];
+      List<OAYSOfferProduct> offerProduct = [];
+
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        subdocuments.add(doc.data() as Map<String, dynamic>);
+        offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
+            doc as DocumentSnapshot<Map<String, dynamic>>));
+      }
+      // print(offerProduct);
+      // streamController.add(subdocuments);
+      streamController.add(offerProduct);
+    });
+
+    streamController.onCancel = () {
+      subscription.cancel();
+    };
+
+    return streamController.stream;
+  }
 
   Future<List<OAYSOfferProduct>> getOfferNearMeForUserByLocation(
       String location) async {
@@ -482,5 +526,9 @@ class OAYSDatabaseService {
       return true;
     }
     return false;
+  }
+
+  void clearListen() {
+    _db.terminate();
   }
 }

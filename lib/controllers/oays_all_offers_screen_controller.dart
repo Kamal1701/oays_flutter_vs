@@ -18,8 +18,13 @@ class OAYSAllOffersScreenController extends GetxController {
   void onInit() async {
     super.onInit();
     if (isUserLoggedIn) {
-      await OAYSDatabaseService().getAllOffersForUserByAll().then((value) {
-        offerProductList = value;
+      // await OAYSDatabaseService().getAllOffersForUserByAll().then((value) {
+      //   offerProductList = value;
+      //   isLoading.value = false;
+      // });
+      _offerProductList
+          .bindStream(OAYSDatabaseService().getAllOffersForUserByStream());
+      await Future.delayed(const Duration(seconds: 2), () {
         isLoading.value = false;
       });
     }

@@ -156,6 +156,17 @@ class OAYSDatabaseService {
             .collection(offerProductDetail)
             .doc(offerId)
             .update(timeTracker);
+
+        _db
+            .collection(offerProductDetailView)
+            .doc(offerId)
+            .set(op.toMap())
+            .whenComplete(() {
+          _db
+              .collection(offerProductDetailView)
+              .doc(offerId)
+              .update(timeTracker);
+        });
       });
 
       return 'Success';
@@ -184,6 +195,17 @@ class OAYSDatabaseService {
             .collection(offerProductDetail)
             .doc(offerId)
             .update(updateTimeTracker);
+
+        _db
+            .collection(offerProductDetailView)
+            .doc(offerId)
+            .update(op.toMap())
+            .whenComplete(() {
+          _db
+              .collection(offerProductDetailView)
+              .doc(offerId)
+              .update(timeTracker);
+        });
       });
 
       return 'Success';
@@ -235,36 +257,6 @@ class OAYSDatabaseService {
     });
   }
 
-  // Future<void> getOfferProductStreamByNearForUser3() async {
-  //   final Stream<QuerySnapshot<Map<String, dynamic>>> parentStream =
-  //       _db.collection(productDetail).snapshots();
-
-  //   // final List<DocumentSnapshot<Map<String, dynamic>>> subcollectionDocuments =
-  //   //     [];
-  //   List<OAYSOfferProduct> offerProduct = [];
-
-  //   parentStream.listen((QuerySnapshot<Map<String, dynamic>> snapshot) {
-  //     for (final DocumentSnapshot<Map<String, dynamic>> document
-  //         in snapshot.docs) {
-  //       final Stream<QuerySnapshot<Map<String, dynamic>>> subcollectionStream =
-  //           document.reference.collection(offerProductDetail).snapshots();
-
-  //       subcollectionStream.listen(
-  //           (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
-  //         for (final DocumentSnapshot<
-  //                 Map<String, dynamic>> subcollectionDocument
-  //             in subcollectionSnapshot.docs) {
-  //           // subcollectionDocuments.add(subcollectionDocument);
-  //           offerProduct.add(
-  //               OAYSOfferProduct.fromDocumentSnapshot(subcollectionDocument));
-  //         }
-  //         // print('getOfferProductStreamByNearForUser3');
-  //         // print(offerProduct.first.isOfferImageBlank);
-  //       });
-  //     }
-  //   });
-  // }
-
   Stream<List<OAYSOfferProduct>> getOfferNearMeByLocationStream(
       String location) {
     return _db
@@ -275,8 +267,12 @@ class OAYSDatabaseService {
       offerProduct.clear();
       for (final DocumentSnapshot<Map<String, dynamic>> document
           in snapshot.docs) {
-        document.reference.collection(offerProductDetail).snapshots().listen(
-            (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
+        document.reference
+            .collection(offerProductDetail)
+            .orderBy("updatedDate", descending: true)
+            .snapshots()
+            .listen(
+                (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
           for (var change in subcollectionSnapshot.docChanges) {
             switch (change.type) {
               case DocumentChangeType.added:
@@ -315,8 +311,12 @@ class OAYSDatabaseService {
       offerProduct.clear();
       for (final DocumentSnapshot<Map<String, dynamic>> document
           in snapshot.docs) {
-        document.reference.collection(offerProductDetail).snapshots().listen(
-            (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
+        document.reference
+            .collection(offerProductDetail)
+            .orderBy("updatedDate", descending: true)
+            .snapshots()
+            .listen(
+                (QuerySnapshot<Map<String, dynamic>> subcollectionSnapshot) {
           for (var change in subcollectionSnapshot.docChanges) {
             switch (change.type) {
               case DocumentChangeType.added:
@@ -386,43 +386,6 @@ class OAYSDatabaseService {
 
     streamController.onCancel = () {
       subscription.cancel();
-    };
-
-    return streamController.stream;
-  }
-
-  Stream<List<OAYSOfferProduct>> getOfferNearMeForUserByStreamCheck() {
-    StreamController<List<OAYSOfferProduct>> streamController =
-        StreamController<List<OAYSOfferProduct>>();
-    StreamSubscription<QuerySnapshot>? subscription;
-
-    _db
-        .collection(productDetail)
-        .snapshots()
-        .map((QuerySnapshot<Map<String, dynamic>> snapshot) {
-      // List<OAYSOfferProduct> offerProduct = [];
-      // offerProduct.clear();
-      print('getOfferNearMeForUserByStreamCheck');
-      for (final DocumentSnapshot<Map<String, dynamic>> document
-          in snapshot.docs) {
-        print(document);
-        print('getOfferNearMeForUserByStreamCheck');
-        subscription = document.reference
-            .collection(offerProductDetail)
-            .snapshots()
-            .listen((querySnapshot) {
-          List<OAYSOfferProduct> offerProduct = [];
-          for (QueryDocumentSnapshot doc in querySnapshot.docs) {
-            offerProduct.add(OAYSOfferProduct.fromDocumentSnapshotWithSymbol(
-                doc as DocumentSnapshot<Map<String, dynamic>>));
-          }
-          streamController.add(offerProduct);
-        });
-      }
-    });
-
-    streamController.onCancel = () {
-      subscription!.cancel();
     };
 
     return streamController.stream;

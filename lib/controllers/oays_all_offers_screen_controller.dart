@@ -24,7 +24,7 @@ class OAYSAllOffersScreenController extends GetxController {
       // });
       _offerProductList
           .bindStream(OAYSDatabaseService().getAllOffersForUserByStream());
-      await Future.delayed(const Duration(seconds: 2), () {
+      await Future.delayed(const Duration(seconds: 1), () {
         isLoading.value = false;
       });
     }

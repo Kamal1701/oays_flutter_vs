@@ -20,6 +20,7 @@ const defaultUpdateImagePath = 'assets/images/camera.png';
 const customerProfile = "CustomerProfile";
 const productDetail = 'ProductDetail';
 const offerProductDetail = 'OfferProductDetail';
+const offerProductDetailView = 'OfferProductDetailView';
 
 //image path
 const offerProductImagePath = 'OfferProductImages';

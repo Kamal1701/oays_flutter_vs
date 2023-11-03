@@ -33,10 +33,14 @@ class OAYSHomeScreenDrawerController extends GetxController {
     profileMerchant,
   ];
 
-  void onSelectedItem(int index) {
+  void onSelectedItem(int index) async {
     selectedIndex.value =
         navigateToScreenIndex != 0 ? navigateToScreenIndex : index;
-    Get.back();
+    // print('onselected');
+    await Future.delayed(const Duration(milliseconds: 50), () {
+      Get.back();
+    });
+
     update();
   }
 
